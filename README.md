@@ -4,17 +4,17 @@ Fullstack app for custom FRET data analysis.
 
 ### Frontend:
 
-- react
-- webpack to build and manage sources
+- [React](https://reactjs.org)/[D3](https://d3js.org) for interactive UI
+- [Webpack](https://webpack.js.org) to manage/bundle assets and build
 
 ### Backend:
 
-- python flask API
-- python lmfit model
+- python [flask](http://flask.pocoo.org) (RESTful API)
+- python [lmfit](https://lmfit.github.io/lmfit-py/) model
 
 ### Database:
 
-- sqlite database (local). Can easily be switched to cloud-based database.
+- [Sqlite](https://www.sqlite.org/index.html) database (local)
 
 <img style="display: block; margin-left: auto; margin-right: auto; width: 100%;" src="https://raw.githubusercontent.com/gcalmettes/fitApp-fullstack/master/sample-data/screenshot-app.png"></img>
 
@@ -22,7 +22,7 @@ Fullstack app for custom FRET data analysis.
 
 1- Build the frontend: 
 
-Install dependencies and build the react app with webpack.
+Install dependencies and build the react/d3 app with webpack.
 
 In the `frontend` folder:
 
