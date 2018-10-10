@@ -20,7 +20,7 @@ Fullstack app for custom FRET data analysis.
 
 # Build and launch the app
 
-1- Build the frontend: 
+1. Build the frontend: 
 
 Install dependencies and build the react/d3 app with webpack.
 
@@ -31,7 +31,7 @@ npm install
 npm run build
 ```
 
-2- Export the FLASK_APP environment variable
+2. Export the FLASK_APP environment variable
 
 In the repository folder:
 
@@ -42,7 +42,7 @@ export FLASK_APP=backend
 export FLASK_ENV=development
 ```
 
-3- Initialize empty sqlite3 database
+3. Initialize empty SQLite database
 
 In the repository folder:
 
@@ -51,7 +51,7 @@ In the repository folder:
 flask init-db
 ```
 
-4- Launch the app
+4. Launch the app
 
 In the repository folder:
 
