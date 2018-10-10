@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Mac OS
+.DS_Store
+
+# Files built by app
+frontend/node_modules/
+frontend/dist/
+
