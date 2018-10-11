@@ -48,6 +48,12 @@ def addRecord(record):
     cur.execute(f"""INSERT INTO {dbname} VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", record)
     db.commit()
 
+def deleteRecord(id_to_delete):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(f"""DELETE FROM {dbname} WHERE ID={id_to_delete}""")
+    db.commit()
+
 
 def init_app(app):
     app.teardown_appcontext(close_db)

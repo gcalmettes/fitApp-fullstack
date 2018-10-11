@@ -5,7 +5,7 @@ from flask import (
 import pandas as pd
 import json
 
-from backend.database.db_utils import addRecord, get_db, execute_query, get_db_name
+from backend.database.db_utils import addRecord, deleteRecord, get_db, execute_query, get_db_name
 from models import utils, fitmethods
 
 bp = Blueprint('data_processing', __name__)
@@ -97,6 +97,29 @@ def viewall(dbname=get_db_name()):
         'ref_amp': row[14]-row[15]
       })
     return jsonify({'data': results})
+
+@bp.route("/deletedbentry", methods = ['POST'])
+def delete_entry(dbname=get_db_name()):
+    jsdata = request.get_json()
+    id_to_delete =  jsdata['id']
+    deleteRecord(id_to_delete)
+    print(f'Row associated with id {id_to_delete} was deleted from {dbname}')
+    rows = execute_query(f"""SELECT * FROM {dbname}""")
+    results = []
+    for row in rows:
+      results.append({
+        'id': row[0],
+        'name': row[1],
+        'trace': row[2],
+        'fit_d1': row[3],
+        'fit_a1': row[4],
+        'fit_d2': row[5],
+        'fit_a2': row[6],
+        'fit_c': row[7],
+        'fit_amp': row[10]-row[11],
+        'ref_amp': row[14]-row[15]
+      })
+    return jsonify({'data': results, 'deletedID': id_to_delete})
 
 ########################################
 ## catch all 
