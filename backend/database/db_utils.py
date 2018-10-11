@@ -52,6 +52,8 @@ def addRecord(record):
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(export_db_command)
+
 
 # initialize database
 # >> flask init-db
@@ -61,6 +63,24 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
+
+# export database to csv
+# >> flask export-db
+@click.command('export-db')
+@with_appcontext
+def export_db_command():
+    """Export existing database to csv"""
+    import pandas as pd
+    name = get_db_name()
+    conn = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+    filename = f"instance/{name}.csv"
+    df = pd.read_sql_query(f'SELECT * FROM {name}', conn)
+    df.to_csv(filename, index=False)
+    conn.close()
+    click.echo(f'Exported the database to {filename}.')
 
 
 
