@@ -11,6 +11,7 @@ import { postData } from './components/utils.js'
 import Button from 'react-bootstrap/lib/Button';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
+import NumberTag from './components/NumberTag.js'
 
 import { ColoredLine, Divider} from './components/ColoredHr.js'
 import ToggleSwitch from './components/ToggleSwitch.js'
@@ -226,6 +227,11 @@ export default class App extends React.Component {
             >
               Next
             </Button>
+            <NumberTag 
+              number={this.state.currentTrace} 
+              total={this.state.nTrace-1}
+              style={{'marginLeft': '35px'}}
+            />
           </GridLayout.NavTop>
           <GridLayout.NavLeft>
             <Divider title='Selection'/>
