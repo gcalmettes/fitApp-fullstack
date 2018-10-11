@@ -14,13 +14,13 @@ def makeDoubleExpoModel(prefix1='exp1_', prefix2='exp2_'):
     return [model, expoDecay1, expoDecay2, constant]
 
 
-def makeModelParams(model, c=1.4, d1=15.5, a1=10, d2=200, a2=0.5, 
+def makeModelParams(model, c=1.4, d1=15., a1=0.5, d2=200, a2=0.5, 
                     prefix1='exp1_', prefix2='exp2_'):
     params = model.make_params()
     params['c'].set(c)
-    params[f'{prefix1}decay'].set(d1, min=0.)
+    params[f'{prefix1}decay'].set(d1, min=2., max=80.)
     params[f'{prefix1}amplitude'].set(a1, min=0.)
-    params[f'{prefix2}decay'].set(d2, min=0.)
+    params[f'{prefix2}decay'].set(d2, min=50., max=800)
     params[f'{prefix2}amplitude'].set(a2, min=0.)
     return params
 
