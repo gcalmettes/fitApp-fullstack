@@ -20,9 +20,14 @@ def readdata():
 @bp.route('/savedata', methods = ['POST'])
 def savedata():
     jsdata = request.get_json()['data']
-    print(jsdata)
+    dataDict = {k: jsdata[i] for i,k in enumerate([
+      'filename', 'trace', 'fit_param_d1', 'fit_param_a1', 'fit_param_d2',
+      'fit_param_a2', 'fit_param_c', 'fit_idx_xstart', 'fit_idx_xend',
+      'fit_value_ystart', 'fit_value_yend', 'ref_idx_xstart', 'ref_idx_xend',
+      'ref_value_ystart', 'ref_value_yend'])}
+    print('Received data:\n', dataDict)
     addRecord(jsdata)
-    return jsonify({ 'response': f'record {jsdata} saved!'})
+    return jsonify({ 'response': 'record saved!', 'data': dataDict})
 
 
 @bp.route('/sendtofit', methods = ['POST'])
