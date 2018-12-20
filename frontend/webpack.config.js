@@ -11,6 +11,10 @@ const config = {
   output: {
     filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'dist/'),
+    // constrain files produced by hot reloading if --watch
+    // see https://github.com/gaearon/react-hot-loader/issues/456#issuecomment-316522465
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist/'),
