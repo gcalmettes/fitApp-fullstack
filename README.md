@@ -1,22 +1,22 @@
-# fitApp-fullstack
+# Whydah
 
-Fullstack app for custom FRET data analysis.
+The [Whydah Gally](https://en.wikipedia.org/wiki/Whydah_Gally), commonly known simply as the Whydah, was a pirate ship was believed to hold treasure from more than 50 ships when it sank in a storm off the coast of Cape Cod on April 26, 1717.
+
+This repo contains the barebone Flask app (React/Redux frontend) that power the lab most valuable data. It will hopefully never sink.
 
 ### Frontend:
 
-- [React](https://reactjs.org)/[D3](https://d3js.org) for interactive UI
+- [React](https://reactjs.org)/[Redux](https://redux.js.org)/[D3](https://d3js.org) for interactive UI
+- [Rxjs](https://rxjs-dev.firebaseapp.com) to handle asynchronous events
 - [Webpack](https://webpack.js.org) to manage/bundle assets and build
 
 ### Backend:
 
 - python [flask](http://flask.pocoo.org) (RESTful API)
-- python [lmfit](https://lmfit.github.io/lmfit-py/) model
 
 ### Database:
 
 - [Sqlite](https://www.sqlite.org/index.html) database (local)
-
-<img style="display: block; margin-left: auto; margin-right: auto; width: 100%;" src="https://raw.githubusercontent.com/gcalmettes/fitApp-fullstack/master/sample-data/screenshot-app.png"></img>
 
 # Build and launch the app
 
@@ -57,6 +57,9 @@ In the repository folder:
 
 ```
 flask run
+
+# if the server needs to be externally visible:
+# flask run --host=0.0.0.0
 ```
 
 go to `http://127.0.0.1:5000/`
