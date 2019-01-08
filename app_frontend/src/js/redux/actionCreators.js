@@ -1,9 +1,9 @@
 import { 
-  dataActions as dataAc
+  dataActions
 } from './actionTypes' 
 
 export const processFile = ( { fileName, fileData } ) => ({
-  type: dataAc.PROCESS_FILE,
+  type: dataActions.PROCESS_FILE,
   fileName,
   fileData
 })

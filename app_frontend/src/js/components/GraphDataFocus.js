@@ -12,7 +12,9 @@ import { isEmpty } from './../helpers'
 const isInRange = (i, range) => i >= range[0] && i <= range[1]
 
 const GraphDataFocus = (props) => {
-  let { dataset, dataFit, margins, xRange, fitBounds, refBounds, onSelect} = props
+  let { dataset, dataFit, margins, fitBounds, refBounds, onSelect} = props
+  const focusRange = dataset.dataset.focusRange
+
   const data = !isEmpty(dataset.dataset.data) 
     ? dataset.dataset.data[`trace${dataset.dataset.currentTrace-1}`] 
     : []
@@ -26,7 +28,9 @@ const GraphDataFocus = (props) => {
         innerWidth = width - margins.left - margins.right,
         innerHeight = height - margins.top - margins.bottom
 
-  const xScaleRange = (xRange && xRange[1]!==xRange[0]) ? xRange : [0, max(data.length ? data : [{x: 1}], d => d.x)]
+  const xScaleRange = (focusRange && focusRange[1]!==focusRange[0]) 
+    ? focusRange 
+    : [0, max(data.length ? data : [{x: 1}], d => d.x)]
 
   const xScale = scaleLinear()
     .domain(xScaleRange)

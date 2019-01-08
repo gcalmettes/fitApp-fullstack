@@ -142,18 +142,11 @@ class DataAnalyzer extends React.Component {
               <NumberTag />
             </Grid>
             <Grid item xs={12}>
-              <GraphDataContext 
-                focusRange={[
-                  {name: 'start', x: 0}, 
-                  {name: 'end', x: 0}
-                ]}
-                onBrush={() => console.log('brushed')} 
-              />
+              <GraphDataContext />
             </Grid>
             <Grid item xs={12}>
               <GraphDataFocus 
                 dataFit={[]}
-                xRange={[]}
                 fitBounds={[]}
                 refBounds={[]}
                 onSelect={() => console.log('selected')}

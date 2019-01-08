@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux'
-// import { dataActions as dataAc } from './../redux/actionTypes';
 import { processFile } from './../redux';
 
 import Button from '@material-ui/core/Button';

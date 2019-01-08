@@ -1,15 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux'
+// import { setDataFocusRange } from './../redux';
+import { dataActions } from './../redux'
 
 import {brushX as d3brushX} from 'd3-brush';
 import {select as d3select,
         event as d3event} from 'd3-selection';
 
-const brushed = (scale, callback) => {
-  if (d3event && d3event.selection) {
-    const range = d3event.selection.map(d => scale.invert(d))
-    callback(range) 
-  }
-}
 
 class Brush extends React.Component {
   
@@ -19,8 +16,8 @@ class Brush extends React.Component {
     this.brush = d3brushX()
       .extent([[0, 0], [this.props.width, this.props.height]])
       .handleSize(20)
-      .on("start brush", () => brushed(this.props.scale, this.props.onBrush))
-      .on("end brush", () => brushed(this.props.scale, this.props.onBrush))
+      .on("start brush", this.brushing.bind(this))
+      .on("end brush", this.brushing.bind(this))
   }
 
   componentDidMount() {
@@ -29,14 +26,33 @@ class Brush extends React.Component {
   }
 
   componentDidUpdate() {
-    const dataLims = this.props.dataLimits//.map(d => this.props.scale.invert(d))
+    const { focusRange, hasData, dispatch } = this.props
     const brushExtent = this.myBrush.current.__brush.selection
-    const isCorrectExtent = brushExtent && [brushExtent[0][0], brushExtent[1][0]]
-      .reduce((curr, val, i) => curr && (dataLims[i] === this.props.scale.invert(val)), true)
-    if (!isCorrectExtent) {
+    const isCorrectExtent = focusRange && brushExtent && [brushExtent[0][0], brushExtent[1][0]]
+      .reduce((curr, val, i) => curr && (focusRange[i] === this.props.scale.invert(val)), true)
+    if (!hasData || !isCorrectExtent) {
       // clear brush
       d3select(this.myBrush.current)
         .call(this.brush.move, null);
+    }
+  }
+
+  brushing(){
+    const { hasData } = this.props
+    if (hasData && d3event && d3event.selection) {
+      const focusRange = d3event.selection.map(d => this.props.scale.invert(d))
+      const { dispatch } = this.props
+      if (focusRange[0] != focusRange[1]) {
+        dispatch({
+          type: dataActions.SET_FOCUS_RANGE, 
+          dataset: { focusRange }
+        })
+      } else if (focusRange) {
+        dispatch({
+          type: dataActions.SET_FOCUS_RANGE, 
+          dataset: { focusRange: null }
+        })
+      }    
     }
   }
 
@@ -45,4 +61,6 @@ class Brush extends React.Component {
   }
 }
 
-export default Brush
+const mapStateToProps = ({ dataset }) => ({ focusRange: dataset.dataset.focusRange, hasData: dataset.dataset.size })
+const connectedBrush = connect(mapStateToProps)(Brush);
+export { connectedBrush as Brush }; 

@@ -1,26 +1,38 @@
-import { dataActions as dataAc } from './../actionTypes';
+import { dataActions } from './../actionTypes';
 
-export const dataset = 
-  (state = { dataset: {fileName: '', data: {}, size: 0, currentTrace: 1}, message: null, error: null}, action) => {
+export const dataset = (
+  state = { 
+    dataset: {
+      fileName: '', 
+      data: {}, 
+      size: 0, 
+      currentTrace: 1,
+      focusRange: null,
+    }, 
+    message: null, 
+    error: null}, 
+  action
+  ) => {
     const { type, dataset, message, error } = action
 
     switch (type) {
-      case dataAc.INCOMING_DATA:
+      case dataActions.INCOMING_DATA:
         return {
           dataset: {...state.dataset, ...dataset},
           message,
           error
         };
-      case dataAc.CLEAR_DATA:
+      case dataActions.CLEAR_DATA:
         return {
           dataset: null,
           message: null,
           error: null
         };
-      case dataAc.PREVIOUS_TRACE:
+      case dataActions.PREVIOUS_TRACE:
         return {
           dataset: {
             ...state.dataset, 
+            focusRange: null,
             currentTrace: state.dataset.currentTrace > 1 
               ? state.dataset.currentTrace - 1 
               : 1
@@ -28,13 +40,23 @@ export const dataset =
           message,
           error
         };
-      case dataAc.NEXT_TRACE:
+      case dataActions.NEXT_TRACE:
         return {
           dataset: {
             ...state.dataset, 
+            focusRange: null,
             currentTrace: state.dataset.currentTrace < state.dataset.size 
               ? state.dataset.currentTrace + 1 
               : state.dataset.size 
+          },
+          message,
+          error
+        };
+      case dataActions.SET_FOCUS_RANGE:
+        return {
+          dataset: {
+            ...state.dataset, 
+            ...dataset
           },
           message,
           error

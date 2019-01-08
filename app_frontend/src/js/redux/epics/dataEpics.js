@@ -2,12 +2,12 @@ import { ofType } from 'redux-observable';
 import { mapTo, switchMap } from 'rxjs/operators';
 
 import { 
-  dataActions as dataAc,
-  alertActions as alertAc
+  dataActions,
+  alertActions
 } from './../actionTypes'
 
 export const processFile = (action$) => action$.pipe(
-  ofType(dataAc.PROCESS_FILE),
+  ofType(dataActions.PROCESS_FILE),
   switchMap( action => {
     const { fileName, fileData } = action
     const requestOptions = {
@@ -22,9 +22,9 @@ export const processFile = (action$) => action$.pipe(
       .then(result => {
         // console.log(result)
         const { dataset, message, error } = result
-        return ({type: dataAc.INCOMING_DATA, dataset: {...dataset, fileName}, message, error: error })
+        return ({type: dataActions.INCOMING_DATA, dataset: {...dataset, fileName}, message, error: error })
       })
-      .catch((error) => ({type: alertAc.SHOW_ALERT, error: error.message }))
+      .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
     }
   )
 )
