@@ -20,9 +20,8 @@ export const processFile = (action$) => action$.pipe(
     return fetch('/data/process', requestOptions)
       .then(response => response.json())
       .then(result => {
-        // console.log(result)
         const { dataset, message, error } = result
-        return ({type: dataActions.INCOMING_DATA, dataset: {...dataset, fileName}, message, error: error })
+        return ({type: dataActions.INCOMING_DATA, dataset: {...dataset, fileName, currentTrace: 1}, message, error: error })
       })
       .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
     }
