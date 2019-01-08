@@ -37,11 +37,18 @@ const styles = addToTheme(
       marginLeft: drawerWidth,
       flexgrow: 1,
     },
+    drawer:{
+      overflow: 'hidden',
+    },
     formControl: {
       margin: `${theme.spacing.unit*3}px ${theme.spacing.unit*3}px 0 ${theme.spacing.unit*3}px`,
     },
     group: {
       margin: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'nowrap',
+      flexShrink: 0,
     },
     font: {
       fontFamily: 'sans-serif'
@@ -71,7 +78,7 @@ const styles = addToTheme(
 
  
 const getFitOptions = opts => opts.map((d,i) => 
-  <FormControlLabel key={`radio${i}`} value={d} control={<Radio color="primary"/>} label={d} />
+  <FormControlLabel styles={{ 'display': 'block'}} key={`radio${i}`} value={d} control={<Radio color="primary"/>} label={d} />
 )
 
 const fitOptions = [
@@ -90,19 +97,6 @@ class DataAnalyzer extends React.Component {
     }
   }
 
-  loadFile(event) {
-    const file = event.target.files[0];
-    if (file) {
-    const reader = new FileReader();
-    reader.onloadend = (evt) => {
-      const dataUrl = evt.target.result;
-      // console.log(file.name, dataUrl)
-      // send redux action for loading data
-    };
-    reader.readAsDataURL(file);
-    }
-  }
-
   selectFitOption(event) {
     this.setState({ fitOptionsValue: event.target.value })
   }
@@ -111,7 +105,7 @@ class DataAnalyzer extends React.Component {
     const { data, message, classes } = this.props
     return (
       <React.Fragment>
-        <ClippedDrawer>
+        <ClippedDrawer className={classes.drawer}>
           <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend">Fitting Options</FormLabel>
           <RadioGroup
