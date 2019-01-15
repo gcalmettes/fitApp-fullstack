@@ -8,6 +8,7 @@ export const dataset = (
       size: 0, 
       currentTrace: 1,
       focusRange: null,
+      fitRange: null,
     }, 
     message: null, 
     error: null}, 
@@ -33,6 +34,7 @@ export const dataset = (
           dataset: {
             ...state.dataset, 
             focusRange: null,
+            fitRange: null,
             currentTrace: state.dataset.currentTrace > 1 
               ? state.dataset.currentTrace - 1 
               : 1
@@ -45,6 +47,7 @@ export const dataset = (
           dataset: {
             ...state.dataset, 
             focusRange: null,
+            fitRange: null,
             currentTrace: state.dataset.currentTrace < state.dataset.size 
               ? state.dataset.currentTrace + 1 
               : state.dataset.size 
@@ -53,6 +56,15 @@ export const dataset = (
           error
         };
       case dataActions.SET_FOCUS_RANGE:
+        return {
+          dataset: {
+            ...state.dataset, 
+            ...dataset
+          },
+          message,
+          error
+        };
+      case dataActions.SET_FIT_RANGE:
         return {
           dataset: {
             ...state.dataset, 

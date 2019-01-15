@@ -11,9 +11,46 @@ import { isEmpty } from './../helpers'
 
 const isInRange = (i, range) => i >= range[0] && i <= range[1]
 
+const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
+  let fitRange
+  if (clear) {
+    dispatch({
+      type: dataActions.SET_FIT_RANGE, 
+      dataset: { fitRange: null }
+    })
+  } else {
+    if (currentFitRange) {
+      const [currentMin, currentMax] = currentFitRange
+      if (currentMin === 0 && currentMax !== 0) {
+          fitRange = idx > currentMax 
+            ? [currentMax, idx]
+            : [idx, currentMax]
+        } else if (idx <= currentMin) {
+          fitRange = [idx, currentMax]
+        } else if (idx >= currentMax) {
+          fitRange = [currentMin, idx]
+        } else {
+          const diffMin = idx-currentMin,
+                diffMax = currentMax-idx
+          fitRange = diffMin <= diffMax 
+            ? [idx, currentMax]
+            : [currentMin, idx]
+        }
+    } else {
+      fitRange = [0, idx]
+    }
+    dispatch({
+      type: dataActions.SET_FIT_RANGE, 
+      dataset: { fitRange }
+    })
+  }
+}
+
+
 const GraphDataFocus = (props) => {
-  let { dataset, dataFit, margins, fitBounds, refBounds, onSelect} = props
+  let { dataset, dataFit, margins, dispatch} = props
   const focusRange = dataset.dataset.focusRange
+  const fitRange = dataset.dataset.fitRange
 
   const data = !isEmpty(dataset.dataset.data) 
     ? dataset.dataset.data[`trace${dataset.dataset.currentTrace-1}`] 
@@ -51,13 +88,12 @@ const GraphDataFocus = (props) => {
       r={3}
       key={`dot-${i}`}
       fill={
-        isInRange(i, fitBounds) 
+        fitRange && isInRange(i, fitRange) 
           ? '#FF8B22' // orange
-          : isInRange(i, refBounds)
-            ? 'yellow' // blue
-            : 'lightblue'} 
+          : 'lightblue'} 
       stroke={'black'}
-      onClick={() => onSelect(i)}
+      onClick={(e) => updateFitRange(i, fitRange, dispatch, e.type=='contextmenu')}
+      onContextMenu={(e) => updateFitRange(i, fitRange, dispatch, e.type=='contextmenu')}
      />
   })
 
