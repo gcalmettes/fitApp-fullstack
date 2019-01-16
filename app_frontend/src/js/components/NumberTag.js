@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import { dataActions as datac } from './../redux/actionTypes';
+import { dataActions } from './../redux/actionTypes';
 
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -55,26 +55,26 @@ class NumberTag extends React.Component {
 
   goNext(){
     if (
-      this.props.metaData.size != 0 
-      && this.props.display.currentTrace < this.props.metaData.size 
+      this.props.nTraces != 0 
+      && this.props.currentTrace < this.props.nTraces 
     ){
       const { dispatch } = this.props
-      dispatch({ type: datac.NEXT_TRACE} );
+      dispatch({ type: dataActions.NEXT_TRACE} );
     }
   }
 
   goPrevious(){
     if (
-      this.props.metaData.size != 0 
-      && this.props.display.currentTrace > 1 
+      this.props.nTraces != 0 
+      && this.props.currentTrace > 1 
     ){
       const { dispatch } = this.props
-      dispatch({ type: datac.PREVIOUS_TRACE} );
+      dispatch({ type: dataActions.PREVIOUS_TRACE} );
     }
   }
 
   render(){
-    const { classes, metaData, display } = this.props
+    const { nTraces, currentTrace, classes } = this.props
 
     return (
       <div className={classes.container}>
@@ -93,7 +93,7 @@ class NumberTag extends React.Component {
         <div className={classes.parent}>
           <div className={classes.child}>
             <Typography noWrap className={classes.label}>
-              {metaData.size == 0 ? 0 : display.currentTrace}/{metaData.size}
+              {nTraces == 0 ? 0 : currentTrace}/{nTraces}
             </Typography>
           </div>
         </div> 
@@ -102,6 +102,9 @@ class NumberTag extends React.Component {
   }
 }
 
-const mapStateToProps = ({ dataset }) => ({ ...dataset })
+const mapStateToProps = ({ dataset }) => ({ 
+  nTraces: dataset.metaData.size,
+  currentTrace: dataset.display.currentTrace
+})
 const connectedNumberTag = connect(mapStateToProps)(withStyles(styles)(NumberTag));
 export { connectedNumberTag as NumberTag }; 

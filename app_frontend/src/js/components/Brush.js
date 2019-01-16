@@ -45,12 +45,12 @@ class Brush extends React.Component {
       if (focusRange[0] != focusRange[1]) {
         dispatch({
           type: dataActions.SET_FOCUS_RANGE, 
-          dataset: { focusRange }
+          display: { focusRange }
         })
       } else if (focusRange) {
         dispatch({
           type: dataActions.SET_FOCUS_RANGE, 
-          dataset: { focusRange: null }
+          display: { focusRange: null }
         })
       }    
     }
@@ -61,6 +61,9 @@ class Brush extends React.Component {
   }
 }
 
-const mapStateToProps = ({ dataset }) => ({ focusRange: dataset.display.focusRange, hasData: dataset.metaData.size })
+const mapStateToProps = ({ dataset }) => ({ 
+  focusRange: dataset.display.focusRange, 
+  hasData: dataset.metaData.size 
+})
 const connectedBrush = connect(mapStateToProps)(Brush);
 export { connectedBrush as Brush }; 

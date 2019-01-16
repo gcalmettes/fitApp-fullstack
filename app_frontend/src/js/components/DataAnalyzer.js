@@ -102,7 +102,7 @@ class DataAnalyzer extends React.Component {
   }
 
   sendToFit(){
-    const { metaData: { data }, display: { currentTrace }, analysis: { fitRange }, dispatch } = this.props
+    const { data, currentTrace , fitRange, dispatch } = this.props
     const trace = data[`trace${currentTrace-1}`]
     if (fitRange) {
       const [minLim, maxLim] = fitRange
@@ -120,7 +120,7 @@ class DataAnalyzer extends React.Component {
   }
 
   saveData(){
-    const { dataset: { currentTrace, data, fileName, fitRange }, dispatch } = this.props
+    const { data, currentTrace , fitRange, dispatch } = this.props
     console.log(currentTrace, dispatch)
   }
 
@@ -179,7 +179,10 @@ class DataAnalyzer extends React.Component {
 }
 
 
-
-const mapStateToProps = ({ dataset }) => ({ ...dataset })
+const mapStateToProps = ({ dataset }) => ({ 
+  currentTrace: dataset.display.currentTrace,
+  data: dataset.metaData.data,
+  fitRange: dataset.analysis.fitRange
+})
 const connectedAnalyzer = connect(mapStateToProps)(withStyles(styles)(DataAnalyzer));
 export { connectedAnalyzer as DataAnalyzer }; 

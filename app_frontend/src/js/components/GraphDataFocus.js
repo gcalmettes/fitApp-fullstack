@@ -48,13 +48,10 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
 
 
 const GraphDataFocus = (props) => {
-  let { metaData, display, analysis, dataFit, margins, dispatch} = props
-  const focusRange = display.focusRange
-  // const fitRange = dataset.dataset.fitRange
-  const fitRange = analysis.fitRange
+  let { traces, currentTrace, fitRange, focusRange, fitLineData, margins, dispatch} = props
 
-  const data = !isEmpty(metaData.data) 
-    ? metaData.data[`trace${display.currentTrace-1}`] 
+  const data = !isEmpty(traces) 
+    ? traces[`trace${currentTrace-1}`] 
     : []
 
   margins = margins 
@@ -99,8 +96,8 @@ const GraphDataFocus = (props) => {
   })
 
   const pathData = lineGenerator(data)
-  const pathDataFit = dataFit
-    ? lineGenerator(dataFit)
+  const pathDataFit = fitLineData
+    ? lineGenerator(fitLineData)
     : ""
   
   return <div>
@@ -144,6 +141,11 @@ const GraphDataFocus = (props) => {
 }
 
 
-const mapStateToProps = ({ dataset }) => ({ ...dataset })
+const mapStateToProps = ({ dataset }) => ({ 
+  traces: dataset.metaData.data,
+  currentTrace: dataset.display.currentTrace,
+  focusRange: dataset.display.focusRange,
+  fitRange: dataset.analysis.fitRange
+})
 const connectedFocus = connect(mapStateToProps)(GraphDataFocus);
 export { connectedFocus as GraphDataFocus };

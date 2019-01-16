@@ -57,7 +57,7 @@ class LeftDrawer extends React.Component {
 
 const ClippedDrawer = withStyles(styles)(LeftDrawer);
 
-const mapStateToProps = ({ authentication }) => ({ authentication })
+const mapStateToProps = ({}) => ({})
 
 const connectedClippedDrawer = connect(mapStateToProps)(ClippedDrawer);
 export { connectedClippedDrawer as ClippedDrawer };
