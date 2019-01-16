@@ -2,73 +2,94 @@ import { dataActions } from './../actionTypes';
 
 export const dataset = (
   state = { 
-    dataset: {
+    metaData: {
       fileName: '', 
       data: {}, 
-      size: 0, 
+      size: 0,
+    }, 
+    display: {
       currentTrace: 1,
       focusRange: null,
+    },
+    analysis: {
       fitRange: null,
-    }, 
+    },
     message: null, 
     error: null}, 
   action
   ) => {
-    const { type, dataset, message, error } = action
+    const { type, metaData, display, analysis, message, error } = action
 
     switch (type) {
       case dataActions.INCOMING_DATA:
         return {
-          dataset: {...state.dataset, ...dataset},
+          metaData: {...state.metaData, ...metaData},
+          display: {
+            currentTrace: 1,
+            focusRange: null,
+          },
+          analysis: {...state.analysis},
           message,
           error
         };
       case dataActions.CLEAR_DATA:
         return {
-          dataset: null,
+          metaData: null,
+          display: null,
+          analysis: null,
           message: null,
           error: null
         };
       case dataActions.PREVIOUS_TRACE:
         return {
-          dataset: {
-            ...state.dataset, 
+          metaData: {...state.metaData},
+          display: {
             focusRange: null,
-            fitRange: null,
-            currentTrace: state.dataset.currentTrace > 1 
-              ? state.dataset.currentTrace - 1 
+            currentTrace: state.display.currentTrace > 1 
+              ? state.display.currentTrace - 1 
               : 1
+          },
+          analysis: {
+            ...state.analysis,
+            fitRange: null,
           },
           message,
           error
         };
       case dataActions.NEXT_TRACE:
         return {
-          dataset: {
-            ...state.dataset, 
+          metaData: {...state.metaData},
+          display: {
             focusRange: null,
+            currentTrace: state.display.currentTrace < state.metaData.size 
+              ? state.display.currentTrace + 1 
+              : state.metaData.size 
+          },
+          analysis: {
+            ...state.analysis,
             fitRange: null,
-            currentTrace: state.dataset.currentTrace < state.dataset.size 
-              ? state.dataset.currentTrace + 1 
-              : state.dataset.size 
           },
           message,
           error
         };
       case dataActions.SET_FOCUS_RANGE:
         return {
-          dataset: {
-            ...state.dataset, 
-            ...dataset
+          metaData: {...state.metaData},
+          display: {
+            ...state.display,
+            ...display
           },
+          analysis: { ...state.analysis },
           message,
           error
         };
       case dataActions.SET_FIT_RANGE:
         return {
-          dataset: {
-            ...state.dataset, 
-            ...dataset
+          metaData: {...state.metaData},
+          display: {...state.display},
+          analysis: {
+            ...state.analysis, 
+            ...analysis
           },
           message,
           error

@@ -61,6 +61,6 @@ class Brush extends React.Component {
   }
 }
 
-const mapStateToProps = ({ dataset }) => ({ focusRange: dataset.dataset.focusRange, hasData: dataset.dataset.size })
+const mapStateToProps = ({ dataset }) => ({ focusRange: dataset.display.focusRange, hasData: dataset.metaData.size })
 const connectedBrush = connect(mapStateToProps)(Brush);
 export { connectedBrush as Brush }; 

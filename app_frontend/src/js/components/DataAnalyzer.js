@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { dataActions as datac } from './../redux/actionTypes';
+import { dataActions } from './../redux/actionTypes';
 
 import classNames from 'classnames';
 
@@ -82,7 +82,7 @@ const getFitOptions = opts => opts.map((d,i) =>
 )
 
 const fitOptions = [
-  'DbleExponential', 
+  'DbleExponentialDown', 
   'SingleExponentialUp',
   'SingleExponentialDown',
   'Reference'
@@ -101,8 +101,31 @@ class DataAnalyzer extends React.Component {
     this.setState({ fitOptionsValue: event.target.value })
   }
 
+  sendToFit(){
+    const { metaData: { data }, display: { currentTrace }, analysis: { fitRange }, dispatch } = this.props
+    const trace = data[`trace${currentTrace-1}`]
+    if (fitRange) {
+      const [minLim, maxLim] = fitRange
+      const dataToFit = trace.slice(minLim, maxLim+1)
+        .reduce((acc, point) => {
+          acc.x.push(point.x)
+          acc.y.push(point.y)
+          return acc
+        }, {x:[], y: []})
+      dispatch({
+        type: dataActions.SEND_DATA_TO_FIT, 
+        fitSettings: { dataToFit, type: this.state.fitOptionsValue }
+      })
+    }
+  }
+
+  saveData(){
+    const { dataset: { currentTrace, data, fileName, fitRange }, dispatch } = this.props
+    console.log(currentTrace, dispatch)
+  }
+
   render() {
-    const { data, message, classes } = this.props
+    const { classes } = this.props
     return (
       <React.Fragment>
         <ClippedDrawer className={classes.drawer}>
@@ -117,12 +140,12 @@ class DataAnalyzer extends React.Component {
             {getFitOptions(fitOptions)}
           </RadioGroup>
         </FormControl>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} onClick={this.sendToFit.bind(this)}>
           <ShareIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Fit
         </Button>
         <Divider />
-        <Button variant="contained" color="primary" className={classes.button}>
+        <Button variant="contained" color="primary" className={classes.button} onClick={this.saveData.bind(this)}>
           <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Save
         </Button>
@@ -139,16 +162,7 @@ class DataAnalyzer extends React.Component {
               <GraphDataContext />
             </Grid>
             <Grid item xs={12}>
-              <GraphDataFocus 
-                dataFit={[]}
-                fitBounds={[]}
-                refBounds={[]}
-                onSelect={() => console.log('selected')}
-                focusRange={[
-                  {name: 'start', x: 0}, 
-                  {name: 'end', x: 0}
-                ]}
-              />
+              <GraphDataFocus />
             </Grid>
             <Grid item xs={12} sm={4}>
               <Paper className={classes.paper}>xs=12 sm=6</Paper>
@@ -166,10 +180,6 @@ class DataAnalyzer extends React.Component {
 
 
 
-const mapStateToProps = ({ dataset }) => (
-  { 
-    message: dataset.message,
-    data: dataset.data  
-  })
+const mapStateToProps = ({ dataset }) => ({ ...dataset })
 const connectedAnalyzer = connect(mapStateToProps)(withStyles(styles)(DataAnalyzer));
 export { connectedAnalyzer as DataAnalyzer }; 

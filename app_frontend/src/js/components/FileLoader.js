@@ -47,7 +47,7 @@ class FileLoader extends React.Component {
 
 
   render() {
-    const { classes } = this.props
+    const { classes, metaData } = this.props
     return (
       <div className={classes.fileLoadDiv}>
         <Button size="small" variant="contained" color='secondary'
@@ -59,7 +59,7 @@ class FileLoader extends React.Component {
           />
         </Button>
         <div className={classes.label}>
-          {this.props.dataset.fileName && this.props.dataset.fileName}
+          {metaData.fileName && metaData.fileName}
         </div>
       </div>
     );
@@ -67,10 +67,6 @@ class FileLoader extends React.Component {
 }
 
 
-const mapStateToProps = ({ dataset }) => (
-  { 
-    message: dataset.message,
-    ...dataset  
-  })
+const mapStateToProps = ({ dataset }) => ({ ...dataset })
 const connectedLoader = connect(mapStateToProps)(withStyles(styles)(FileLoader));
 export { connectedLoader as FileLoader }; 

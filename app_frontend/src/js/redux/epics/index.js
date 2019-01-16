@@ -2,9 +2,13 @@ import { combineEpics } from 'redux-observable';
 
 
 import { catchError } from './errorEpics';
-import { processFile } from './dataEpics';
+import { 
+  processFile,
+  sendDataToFit, 
+} from './dataEpics';
 
 export const rootEpics = combineEpics(
   catchError,
-  processFile
+  processFile,
+  sendDataToFit
 )

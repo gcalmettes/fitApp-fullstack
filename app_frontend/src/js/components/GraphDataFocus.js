@@ -16,7 +16,7 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
   if (clear) {
     dispatch({
       type: dataActions.SET_FIT_RANGE, 
-      dataset: { fitRange: null }
+      analysis: { fitRange: null }
     })
   } else {
     if (currentFitRange) {
@@ -41,19 +41,20 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
     }
     dispatch({
       type: dataActions.SET_FIT_RANGE, 
-      dataset: { fitRange }
+      analysis: { fitRange }
     })
   }
 }
 
 
 const GraphDataFocus = (props) => {
-  let { dataset, dataFit, margins, dispatch} = props
-  const focusRange = dataset.dataset.focusRange
-  const fitRange = dataset.dataset.fitRange
+  let { metaData, display, analysis, dataFit, margins, dispatch} = props
+  const focusRange = display.focusRange
+  // const fitRange = dataset.dataset.fitRange
+  const fitRange = analysis.fitRange
 
-  const data = !isEmpty(dataset.dataset.data) 
-    ? dataset.dataset.data[`trace${dataset.dataset.currentTrace-1}`] 
+  const data = !isEmpty(metaData.data) 
+    ? metaData.data[`trace${display.currentTrace-1}`] 
     : []
 
   margins = margins 
@@ -143,6 +144,6 @@ const GraphDataFocus = (props) => {
 }
 
 
-const mapStateToProps = ({ dataset }) => ({ dataset })
+const mapStateToProps = ({ dataset }) => ({ ...dataset })
 const connectedFocus = connect(mapStateToProps)(GraphDataFocus);
 export { connectedFocus as GraphDataFocus };

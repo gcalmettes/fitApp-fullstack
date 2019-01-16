@@ -12,9 +12,9 @@ import { isEmpty } from './../helpers'
 class GraphDataContext extends React.Component {
 
   render(){
-    let { dataset, margins } = this.props
-    const data = !isEmpty(dataset.dataset.data) 
-      ? dataset.dataset.data[`trace${dataset.dataset.currentTrace-1}`] 
+    let { metaData, display, margins } = this.props
+    const data = !isEmpty(metaData.data) 
+      ? metaData.data[`trace${display.currentTrace-1}`] 
       : []
 
     margins = margins 
@@ -67,6 +67,6 @@ class GraphDataContext extends React.Component {
   }
 }
 
-const mapStateToProps = ({ dataset }) => ({ dataset })
+const mapStateToProps = ({ dataset }) => ({ ...dataset })
 const connectedContext = connect(mapStateToProps)(GraphDataContext);
 export { connectedContext as GraphDataContext }; 

@@ -55,8 +55,8 @@ class NumberTag extends React.Component {
 
   goNext(){
     if (
-      this.props.dataset.dataset.size != 0 
-      && this.props.dataset.dataset.currentTrace < this.props.dataset.dataset.size 
+      this.props.metaData.size != 0 
+      && this.props.display.currentTrace < this.props.metaData.size 
     ){
       const { dispatch } = this.props
       dispatch({ type: datac.NEXT_TRACE} );
@@ -65,8 +65,8 @@ class NumberTag extends React.Component {
 
   goPrevious(){
     if (
-      this.props.dataset.dataset.size != 0 
-      && this.props.dataset.dataset.currentTrace > 1 
+      this.props.metaData.size != 0 
+      && this.props.display.currentTrace > 1 
     ){
       const { dispatch } = this.props
       dispatch({ type: datac.PREVIOUS_TRACE} );
@@ -74,7 +74,7 @@ class NumberTag extends React.Component {
   }
 
   render(){
-    const { classes, dataset } = this.props
+    const { classes, metaData, display } = this.props
 
     return (
       <div className={classes.container}>
@@ -93,7 +93,7 @@ class NumberTag extends React.Component {
         <div className={classes.parent}>
           <div className={classes.child}>
             <Typography noWrap className={classes.label}>
-              {dataset.dataset.size == 0 ? 0 : dataset.dataset.currentTrace}/{dataset.dataset.size}
+              {metaData.size == 0 ? 0 : display.currentTrace}/{metaData.size}
             </Typography>
           </div>
         </div> 
@@ -102,6 +102,6 @@ class NumberTag extends React.Component {
   }
 }
 
-const mapStateToProps = ({ dataset }) => ({ dataset })
+const mapStateToProps = ({ dataset }) => ({ ...dataset })
 const connectedNumberTag = connect(mapStateToProps)(withStyles(styles)(NumberTag));
 export { connectedNumberTag as NumberTag }; 
