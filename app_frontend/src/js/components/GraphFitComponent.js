@@ -14,7 +14,7 @@ const styles = addToTheme(
   {
     root: {
       ...theme.mixins.gutters(),
-      paddingTop: theme.spacing.unit * 4,
+      paddingTop: theme.spacing.unit * 3,
       paddingBottom: theme.spacing.unit * 1,
     },
   }
@@ -71,11 +71,13 @@ const FitComponent = (props) => {
             scale = {yScale}
             orientation = "left"
           />
-          {params.map((p, i) => (
-            <text key={p} x={innerWidth} y={10+i*15} textAnchor={'end'}>
-              {`${p}: ${paramValues[p].toFixed(3)}`}
-            </text>
-          ))
+          {params.map((p, i) => {
+            let paramName = p.split('_')
+            paramName = paramName[paramName.length-1]
+            return <text key={p} x={innerWidth} y={10+i*15} textAnchor={'end'}>
+                {`${paramName}: ${paramValues[p].toFixed(3)}`}
+              </text>
+          })
           }
           <path d={lineGenerator(data)} style={{'fill': 'none', 'stroke': 'black'}}/>
         </g>
