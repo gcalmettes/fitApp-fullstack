@@ -1,7 +1,6 @@
 import lmfit
 import pandas as pd
 
-
 ########################################
 # Fitting models
 ########################################
@@ -52,25 +51,43 @@ def makeDoubleModelParams(model, c=1.4, d1=15., a1=0.5, d2=200, a2=0.5,
 # Fitting routine
 ########################################
 
-def fitModel(xData, yData, bounds, model='doubleDecreasingExpo'):
+def fitModel(xData, yData, model='DbleExponentialDown'):
 
-    if model == 'doubleDecreasingExpo':
+    if model == 'DbleExponentialDown':
         # make composite model
         components = makeDoubleExpoModel()
-        fullModel = components[0]
+        [fullModel, *subComponents] = components
         params = makeDoubleModelParams(fullModel, c=1.4, d1=15.5, a1=10, d2=200, a2=0.5)
 
-    if model == 'singleDecreasingExpo':
+    if model == 'SingleExponentialUp':
         return
 
-    lim1, lim2 = bounds
-    mask = (xData >= xData[lim1]) & (xData <= xData[lim2])
-    xRaw = xData[mask]
-    y = yData[mask]
+    if model == 'SingleExponentialDown':
+        return
+
+    if model == 'Reference':
+        return
+
+    y = yData
     # start x at zero
-    x = xRaw - xRaw[0]
+    x = xData - xData[0]
     # fit model
     outParams = fullModel.fit(y, params, x=x)
 
-    outComponents = [[x, xRaw, comp.eval(outParams.params, x=x)] for comp in components]
-    return [outParams, outComponents]
+    result = {
+        # composite model
+        "model": {
+            "name": fullModel.name,
+            "params": outParams.best_values,
+            "x0": x.tolist(),
+            "x": xData.tolist(),
+            "y": fullModel.eval(outParams.params, x=x).tolist()
+        },
+        # sub components
+        "components": [{
+            "name": comp.name,
+            "params": comp.param_names,
+            "y": comp.eval(outParams.params, x=x).tolist()
+        } for comp in subComponents]
+    }
+    return result

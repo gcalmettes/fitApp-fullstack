@@ -5,13 +5,13 @@ import { dataActions } from './../redux/actionTypes';
 import classNames from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
 import { ClippedDrawer, drawerWidth } from './ClippedDrawer'
 import { FileLoader } from './FileLoader'
 import { GraphDataContext } from './GraphDataContext'
 import { GraphDataFocus } from './GraphDataFocus'
 import { NumberTag } from './NumberTag'
+import { GraphFitGridComponents } from './GraphFitGridComponents'
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -164,14 +164,10 @@ class DataAnalyzer extends React.Component {
             <Grid item xs={12}>
               <GraphDataFocus />
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Paper className={classes.paper}>xs=12 sm=6</Paper>
-            </Grid>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>xs=12</Paper>
+              <GraphFitGridComponents />
             </Grid>
           </Grid>
-
         </div>
       </React.Fragment>
     );

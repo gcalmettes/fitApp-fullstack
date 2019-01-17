@@ -13,6 +13,8 @@ export const dataset = (
     },
     analysis: {
       fitRange: null,
+      model: null,
+      components: null
     },
     message: null, 
     error: null}, 
@@ -23,12 +25,16 @@ export const dataset = (
     switch (type) {
       case dataActions.INCOMING_DATA:
         return {
-          metaData: {...state.metaData, ...metaData},
+          metaData: { ...state.metaData, ...metaData },
           display: {
             currentTrace: 1,
             focusRange: null,
           },
-          analysis: {...state.analysis},
+          analysis: {
+            fitRange: null,
+            model: null,
+            components: null
+          },
           message,
           error
         };
@@ -42,7 +48,7 @@ export const dataset = (
         };
       case dataActions.PREVIOUS_TRACE:
         return {
-          metaData: {...state.metaData},
+          metaData: { ...state.metaData },
           display: {
             focusRange: null,
             currentTrace: state.display.currentTrace > 1 
@@ -50,15 +56,16 @@ export const dataset = (
               : 1
           },
           analysis: {
-            ...state.analysis,
             fitRange: null,
+            model: null,
+            components: null
           },
           message,
           error
         };
       case dataActions.NEXT_TRACE:
         return {
-          metaData: {...state.metaData},
+          metaData: { ...state.metaData },
           display: {
             focusRange: null,
             currentTrace: state.display.currentTrace < state.metaData.size 
@@ -66,15 +73,16 @@ export const dataset = (
               : state.metaData.size 
           },
           analysis: {
-            ...state.analysis,
             fitRange: null,
+            model: null,
+            components: null
           },
           message,
           error
         };
       case dataActions.SET_FOCUS_RANGE:
         return {
-          metaData: {...state.metaData},
+          metaData: { ...state.metaData },
           display: {
             ...state.display,
             ...display
@@ -85,8 +93,19 @@ export const dataset = (
         };
       case dataActions.SET_FIT_RANGE:
         return {
-          metaData: {...state.metaData},
-          display: {...state.display},
+          metaData: { ...state.metaData },
+          display: { ...state.display },
+          analysis: {
+            ...state.analysis, 
+            ...analysis
+          },
+          message,
+          error
+        };
+      case dataActions.INCOMING_FIT_DATA:
+        return {
+          metaData: { ...state.metaData },
+          display: { ...state.display },
           analysis: {
             ...state.analysis, 
             ...analysis

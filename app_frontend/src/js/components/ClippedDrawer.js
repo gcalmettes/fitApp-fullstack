@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 
 import Drawer from '@material-ui/core/Drawer';
 
-
 import { withStyles } from '@material-ui/core/styles';
 import { theme, addToTheme } from './theme';
 
