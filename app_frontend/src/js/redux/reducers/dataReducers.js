@@ -13,6 +13,7 @@ export const dataset = (
     },
     analysis: {
       fitRange: null,
+      fitModel: null,
       model: null,
       components: null,
       comments: {
@@ -34,6 +35,7 @@ export const dataset = (
             focusRange: null,
           },
           analysis: {
+            ...state.analysis,
             fitRange: null,
             model: null,
             components: null
@@ -59,6 +61,7 @@ export const dataset = (
               : 1
           },
           analysis: {
+            ...state.analysis,
             fitRange: null,
             model: null,
             components: null
@@ -76,6 +79,7 @@ export const dataset = (
               : state.metaData.size 
           },
           analysis: {
+            ...state.analysis,
             fitRange: null,
             model: null,
             components: null
@@ -94,7 +98,7 @@ export const dataset = (
           message,
           error
         };
-      case dataActions.SET_FIT_RANGE:
+      case dataActions.SET_FIT_OPTIONS:
         return {
           metaData: { ...state.metaData },
           display: { ...state.display },

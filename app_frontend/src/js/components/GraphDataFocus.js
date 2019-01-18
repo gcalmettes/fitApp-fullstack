@@ -15,7 +15,7 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
   let fitRange
   if (clear) {
     dispatch({
-      type: dataActions.SET_FIT_RANGE, 
+      type: dataActions.SET_FIT_OPTIONS, 
       analysis: { fitRange: null }
     })
   } else {
@@ -40,7 +40,7 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
       fitRange = [0, idx]
     }
     dispatch({
-      type: dataActions.SET_FIT_RANGE, 
+      type: dataActions.SET_FIT_OPTIONS, 
       analysis: { fitRange }
     })
   }
