@@ -15,7 +15,10 @@ export const dataset = (
       fitRange: null,
       model: null,
       components: null,
-      comment: '',
+      comments: {
+        list: [],
+        selectedIndex: null
+      }
     },
     message: null, 
     error: null}, 
@@ -119,7 +122,10 @@ export const dataset = (
           display: { ...state.display },
           analysis: {
             ...state.analysis, 
-            ...analysis
+            comments: {
+              ...state.analysis.comments,
+              ...analysis.comments
+            }
           },
           message,
           error

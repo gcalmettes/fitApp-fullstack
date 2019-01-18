@@ -27,41 +27,37 @@ const styles = addToTheme(
 )
 
 class CommentBox extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      selectedIndex: 0,
-      commentList: [],
-    };
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
 
   handleListItemClick(event, index){
     const { dispatch } = this.props
     this.setState({ selectedIndex: index });
     dispatch({
       type: dataActions.SET_FIT_COMMENT,
-      analysis: { comment: this.state.commentList[index]}
+      analysis: { 
+        comments: {
+          selectedIndex: index,
+        } 
+      }
     })
   };
 
   handleInputChange(event){
     if(event.key === "Enter"){
-      this.setState({ commentList: [...this.state.commentList, event.target.value] });
-      if (this.state.commentList.length == 0) {
-        const { dispatch } = this.props
-        // if it was first comment, set the comment in global state
-        dispatch({
-          type: dataActions.SET_FIT_COMMENT,
-          analysis: { comment: event.target.value}
-        })
-      }
-      event.target.value = ''
-     }
+      const { itemList, selectedIndex, dispatch } = this.props
+      dispatch({
+        type: dataActions.SET_FIT_COMMENT,
+        analysis: { 
+          comments: {
+            list: new Set([...itemList, event.target.value]),
+            selectedIndex: [...itemList].length
+          }
+        }
+      })
+    }
   }
 
   render() {
-    const { classes } = this.props;
+    const { itemList, selectedIndex, classes } = this.props;
 
     return (
       <div>
@@ -72,29 +68,30 @@ class CommentBox extends React.Component {
           placeholder="Enter here"
           margin="normal"
           variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onKeyDown={this.handleInputChange}
+          InputLabelProps={{ shrink: true, }}
+          onKeyDown={this.handleInputChange.bind(this)}
         />
       <List className={classes.root}>
-            {this.state.commentList.map((comment, i) => (
-              <ListItem 
-                key={`item-${i}`}
-                button
-                selected={this.state.selectedIndex === i}
-                onClick={event => this.handleListItemClick(event, i)}
-              >
-                <ListItemText primary={`${comment}`} />
-              </ListItem>
-            ))}
+        {[...itemList].map((comment, i) => (
+          <ListItem 
+            key={`item-${i}`}
+            button
+            selected={selectedIndex === i}
+            onClick={event => this.handleListItemClick(event, i)}
+          >
+            <ListItemText primary={`${comment}`} />
+          </ListItem>
+        ))}
       </List>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ }) => ({ })
+const mapStateToProps = ({ dataset }) => ({
+  itemList: dataset.analysis.comments.list,
+  selectedIndex: dataset.analysis.comments.selectedIndex,
+})
 const connectedCommentBox = connect(mapStateToProps)(withStyles(styles)(CommentBox));
 
 export { connectedCommentBox as CommentBox}
