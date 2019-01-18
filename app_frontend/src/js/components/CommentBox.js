@@ -89,8 +89,8 @@ class CommentBox extends React.Component {
 }
 
 const mapStateToProps = ({ dataset }) => ({
-  itemList: dataset.analysis.comments.list,
-  selectedIndex: dataset.analysis.comments.selectedIndex,
+  itemList: dataset.analysis.comments ? dataset.analysis.comments.list : [],
+  selectedIndex: dataset.analysis.comments && dataset.analysis.comments.selectedIndex,
 })
 const connectedCommentBox = connect(mapStateToProps)(withStyles(styles)(CommentBox));
 
