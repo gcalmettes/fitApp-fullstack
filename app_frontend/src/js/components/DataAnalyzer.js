@@ -121,8 +121,12 @@ class DataAnalyzer extends React.Component {
   }
 
   saveData(){
-    const { data, currentTrace , fitRange, dispatch } = this.props
-    console.log(currentTrace, dispatch)
+    const { authentication, analysis, dispatch } = this.props
+    dispatch({
+      type: dataActions.SAVE_DATA_TO_DATABASE, 
+      data: { ...analysis },
+      authentication,
+    })
   }
 
   render() {
@@ -177,10 +181,12 @@ class DataAnalyzer extends React.Component {
 }
 
 
-const mapStateToProps = ({ dataset }) => ({ 
+const mapStateToProps = ({ authentication, dataset }) => ({ 
   currentTrace: dataset.display.currentTrace,
   data: dataset.metaData.data,
-  fitRange: dataset.analysis.fitRange
+  fitRange: dataset.analysis.fitRange,
+  analysis: dataset.analysis,
+  authentication,
 })
 const connectedAnalyzer = connect(mapStateToProps)(withStyles(styles)(DataAnalyzer));
 export { connectedAnalyzer as DataAnalyzer }; 

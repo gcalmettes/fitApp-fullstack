@@ -5,6 +5,8 @@ from flask import (
 from sqlalchemy import func
 from sqlalchemy.exc import OperationalError
 
+from app_server.security.authorization import authorization_required
+
 from sqlalchemy.ext.automap import automap_base
 from app_server.database.db_utils import myBase, engine
 
@@ -47,4 +49,25 @@ def fit_data():
       'data': fit_data,
       'message': 'Fitting process executed.'
     }), 200
+    return response
+
+@bp.route('/data/save', methods=['POST'])
+@authorization_required
+def save_Data():
+    data = request.json.get('data')
+    username = request.json.get('username')
+    print(username)
+    print(data)
+    
+    if not data:
+      response = jsonify({ 
+        'message': 'No data to save.',
+        'data': None
+      }), 200
+
+    else:
+      response = jsonify({ 
+        'message': 'Data saved.',
+        'data': None
+      }), 200
     return response

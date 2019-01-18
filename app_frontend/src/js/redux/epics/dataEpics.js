@@ -1,6 +1,8 @@
 import { ofType } from 'redux-observable';
 import { mapTo, switchMap } from 'rxjs/operators';
 
+import { makeAuthHeader } from '../../helpers';
+
 import { 
   dataActions,
   alertActions
@@ -93,6 +95,31 @@ export const sendDataToFit = (action$) => action$.pipe(
             },
             components: componentsArray
           }, message, error: error })
+      })
+      .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
+    }
+  )
+)
+
+
+export const saveDataToDatabase = (action$) => action$.pipe(
+  ofType(dataActions.SAVE_DATA_TO_DATABASE),
+  switchMap( action => {
+    const { data, authentication: { username, access_token } } = action
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        ...makeAuthHeader(access_token)
+      },
+      body: JSON.stringify({ data, username })
+    };
+    return fetch('/data/save', requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        const { data, message, error } = result
+        console.log(message)
+        return ({type: 'DATA SAVED', message, error: error })
       })
       .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
     }

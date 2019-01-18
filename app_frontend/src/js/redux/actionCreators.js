@@ -22,8 +22,7 @@ export const registerUser = ( { firstname, lastname, username, password } ) => (
   password
 })
 
-
-
+// used in FileLoader
 export const processFile = ( { fileName, fileData } ) => ({
   type: dataActions.PROCESS_FILE,
   fileName,
