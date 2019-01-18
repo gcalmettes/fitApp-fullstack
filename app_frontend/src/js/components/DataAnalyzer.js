@@ -12,6 +12,7 @@ import { GraphDataContext } from './GraphDataContext'
 import { GraphDataFocus } from './GraphDataFocus'
 import { NumberTag } from './NumberTag'
 import { GraphFitGridComponents } from './GraphFitGridComponents'
+import { CommentBox } from './CommentBox'
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -145,6 +146,7 @@ class DataAnalyzer extends React.Component {
           Fit
         </Button>
         <Divider />
+        <CommentBox />
         <Button variant="contained" color="primary" className={classes.button} onClick={this.saveData.bind(this)}>
           <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Save

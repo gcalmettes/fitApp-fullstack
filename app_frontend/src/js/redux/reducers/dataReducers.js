@@ -14,14 +14,14 @@ export const dataset = (
     analysis: {
       fitRange: null,
       model: null,
-      components: null
+      components: null,
+      comment: '',
     },
     message: null, 
     error: null}, 
   action
   ) => {
     const { type, metaData, display, analysis, message, error } = action
-
     switch (type) {
       case dataActions.INCOMING_DATA:
         return {
@@ -103,6 +103,17 @@ export const dataset = (
           error
         };
       case dataActions.INCOMING_FIT_DATA:
+        return {
+          metaData: { ...state.metaData },
+          display: { ...state.display },
+          analysis: {
+            ...state.analysis, 
+            ...analysis
+          },
+          message,
+          error
+        };
+      case dataActions.SET_FIT_COMMENT:
         return {
           metaData: { ...state.metaData },
           display: { ...state.display },
