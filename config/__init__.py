@@ -14,7 +14,7 @@ class DevelopmentConfig(BaseConfig):
     # os.urandom(24)
     SECRET_KEY = "let's get more gold" 
     JWT_SECRET_KEY = 'jwt-super-secret-string'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////Users/gcalmettes/Git/whydah/instance/treasure.sqlite3' 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////Users/gcalmettes/Git/fitApp-fullstack/instance/treasure.sqlite3' 
 
 class TestingConfig(BaseConfig):
     DEBUG = True
