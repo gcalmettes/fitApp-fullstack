@@ -55,14 +55,14 @@ const getFitOptions = opts => opts.map((d,i) =>
 class FitOptions extends React.Component {
   constructor(props){
     super(props)
-
-    this.state = {
-      fitOptionsValue: fitOptions[0],
-    }
+    const { dispatch } = props
+    dispatch({
+      type: dataActions.SET_FIT_OPTIONS, 
+      analysis: { fitModel: fitOptions[0] }
+    })
   }
 
   selectFitOption(event) {
-    this.setState({ fitOptionsValue: event.target.value })
     const { dispatch } = this.props
     dispatch({
       type: dataActions.SET_FIT_OPTIONS, 
@@ -89,7 +89,11 @@ class FitOptions extends React.Component {
   }
 
   render(){
-    const { nTraces, currentTrace, classes } = this.props
+    const { fitModel, classes } = this.props
+    
+    const selectedFitModel = fitModel 
+      ? fitModel
+      : fitOptions[0]
 
     return (
       <React.Fragment>
@@ -98,7 +102,7 @@ class FitOptions extends React.Component {
           <RadioGroup
             name="fittingOptions"
             className={classes.group}
-            value={this.state.fitOptionsValue}
+            value={selectedFitModel}
             onChange={this.selectFitOption.bind(this)}
           >
             {getFitOptions(fitOptions)}
@@ -117,6 +121,7 @@ const mapStateToProps = ({ dataset }) => ({
   currentTrace: dataset.display.currentTrace,
   data: dataset.metaData.data,
   fitRange: dataset.analysis.fitRange,
+  fitModel: dataset.analysis.fitModel,
 })
 const connectedFitOptions = connect(mapStateToProps)(withStyles(styles)(FitOptions));
 export { connectedFitOptions as FitOptions }; 
