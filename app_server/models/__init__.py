@@ -72,8 +72,8 @@ class User(myBase):
       sub = sub or self.get_token_content()
       try:
           payload = {
-              # 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, hours=2),
-              'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=30),
+              'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, hours=3),
+              # 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=10),
               'iat': datetime.datetime.utcnow(),
               **sub
           }
