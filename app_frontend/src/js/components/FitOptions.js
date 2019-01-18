@@ -71,7 +71,7 @@ class FitOptions extends React.Component {
   }
 
   sendToFit(){
-    const { data, currentTrace , fitRange, dispatch } = this.props
+    const { data, currentTrace , fitRange, fitModel, dispatch } = this.props
     const trace = data[`trace${currentTrace-1}`]
     if (fitRange) {
       const [minLim, maxLim] = fitRange
@@ -83,7 +83,7 @@ class FitOptions extends React.Component {
         }, {x:[], y: []})
       dispatch({
         type: dataActions.SEND_DATA_TO_FIT, 
-        fitSettings: { dataToFit, type: this.state.fitOptionsValue }
+        fitSettings: { dataToFit, type: fitModel }
       })
     }
   }
