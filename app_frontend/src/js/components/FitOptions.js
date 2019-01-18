@@ -63,6 +63,11 @@ class FitOptions extends React.Component {
 
   selectFitOption(event) {
     this.setState({ fitOptionsValue: event.target.value })
+    const { dispatch } = this.props
+    dispatch({
+      type: dataActions.SET_FIT_OPTIONS, 
+      analysis: { fitModel: event.target.value }
+    })
   }
 
   sendToFit(){
