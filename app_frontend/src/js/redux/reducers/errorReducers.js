@@ -18,3 +18,18 @@ export const alert =
         };
     }
 }
+
+export const registrationError = 
+  (state = { error: null }, action) => {
+    const { error, type } = action
+    switch (type) {
+      case nav.NAVIGATE_TO_HOME:
+        return { error };
+      case nav.NAVIGATE_TO_LOGIN:
+        return { error };
+      case nav.NAVIGATE_TO_REGISTER:
+        return { error };
+      default:
+        return { error: null }
+    }
+}

@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { logout } from './../redux'
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -65,11 +68,17 @@ class Navigation extends React.Component {
       value: currentTab >= 0 ? currentTab : 0,
     };
     this.changeTab = this.changeTab.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   changeTab(event, value) {
     this.setState({ value });
   };
+
+  handleLogout(){
+    const { authentication: { username }, dispatch } = this.props
+    dispatch(logout({ username }))
+  }
 
   render() {
     const { classes, children } = this.props
@@ -79,6 +88,13 @@ class Navigation extends React.Component {
           <Tabs onChange={this.changeTab} value={this.state.value} className={classes.grow}>
             {getTabs({children: children})}
           </Tabs>
+          <Button 
+            variant="contained"
+            styles={classes.buttonStyle}
+            onClick={this.handleLogout}
+          >
+              Logout
+          </Button>
         </TopBar>
         {TabContainer({children: children, classes: classes})}
       </React.Fragment>
@@ -86,4 +102,12 @@ class Navigation extends React.Component {
   }
 }
 
-export const NavBar = withStyles(styles)(Navigation);
+// export const NavBar = withStyles(styles)(Navigation);
+
+
+const NavBar = withStyles(styles)(Navigation);
+
+const mapStateToProps = ({ authentication }) => ({ authentication })
+
+const connectedNavBar = connect(mapStateToProps)(NavBar);
+export { connectedNavBar as NavBar };

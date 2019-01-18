@@ -43,7 +43,7 @@ const styles = addToTheme(
     button: {
       margin: 2,
       padding: 0,
-      minHeight: '20px',
+      minHeight: '21px',
     },
     label: {
       fontSize: 17,

@@ -18,7 +18,7 @@ const styles = addToTheme(
       background: 'lightgray'
     },
     buttonFile: {
-      margin: `8px 5px 8px 5px`,
+      margin: `10px 8px 10px 5px`,
       minWidth: 110,
     },
     label: {

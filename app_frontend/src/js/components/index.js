@@ -1,3 +1,4 @@
+export * from './PrivateRoute';
 export * from './DataAnalyzer';
 export * from './theme';
 export * from './TopBar';
