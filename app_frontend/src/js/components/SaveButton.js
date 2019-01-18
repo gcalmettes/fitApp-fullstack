@@ -31,7 +31,15 @@ class SaveButton extends React.Component {
     const { authentication, metaData, analysis, dispatch } = this.props
     dispatch({
       type: dataActions.SAVE_DATA_TO_DATABASE, 
-      data: { ...analysis, ...metaData },
+      data: { 
+        fileName: metaData.fileName,
+        fitModel: analysis.fitModel,
+        comment: [...analysis.comments.list][analysis.comments.selectedIndex],
+        model: {
+          components: analysis.model.name,
+          params: analysis.model.params,
+        }
+      },
       authentication,
     })
   }
