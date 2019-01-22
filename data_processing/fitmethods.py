@@ -1,5 +1,6 @@
 import lmfit
 import pandas as pd
+import numpy as np
 
 ########################################
 # Fitting models
@@ -15,14 +16,11 @@ def makeSingleExpoModel():
     return [model, expoDecay, constant]
 
 
-def makeSingleModelParams(model, c=1.4, d1=15., a1=0.5, decreasing=True):
+def makeSingleModelParams(model, c=1.4, d1=15., a1=0.5):
     params = model.make_params()
     params['c'].set(c)
     params['decay'].set(d1, min=0.1, max=80.)
-    if decreasing:
-        params['amplitude'].set(a1, min=0.)
-    else:
-        params['amplitude'].set(a1)
+    params['amplitude'].set(a1)
     return params
 
 
@@ -60,13 +58,38 @@ def fitModel(xData, yData, model='DbleExponentialDown'):
         params = makeDoubleModelParams(fullModel, c=1.4, d1=15.5, a1=10, d2=200, a2=0.5)
 
     if model == 'SingleExponentialUp':
-        return
-
+        # make composite model
+        components = makeSingleExpoModel()
+        [fullModel, *subComponents] = components
+        params = makeSingleModelParams(fullModel, c=1.7, d1=15., a1=0.5)
     if model == 'SingleExponentialDown':
-        return
+        # make composite model
+        components = makeSingleExpoModel()
+        [fullModel, *subComponents] = components
+        params = makeSingleModelParams(fullModel, c=1.7, d1=15., a1=-0.5)
 
     if model == 'Reference':
-        return
+        x = xData - xData[0]
+        y = np.zeros_like(x)
+        y[:int(len(y)/2)] = yData[0]
+        y[int(len(y)/2):] = yData[-1]
+        result = {
+            # composite model
+            "model": {
+                "name": "Model(Reference)",
+                "params": {"c": yData[0], "amplitude": yData[-1]-yData[0]},
+                "x0": x.tolist(),
+                "x": xData.tolist(),
+                "y": y.tolist()
+            },
+            # sub components
+            "components": [{
+                "name": "Model(Delta)",
+                "params": ["c", "amplitude"],
+                "y": y.tolist()
+            }]
+        }
+        return result
 
     y = yData
     # start x at zero
