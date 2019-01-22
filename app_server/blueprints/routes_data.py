@@ -2,19 +2,12 @@ from flask import (
     Blueprint, request, jsonify
 )
 
-from sqlalchemy import func
-from sqlalchemy.exc import OperationalError
+import json
 
 from app_server.security.authorization import authorization_required
 
-from sqlalchemy.ext.automap import automap_base
-from app_server.database.db_utils import myBase, engine
-
 from data_processing import utils, fitmethods
-
-autoBase = automap_base(myBase)
-# reflect the tables
-autoBase.prepare(engine, reflect=True)
+from app_server.models import User, DataFit
 
 bp = Blueprint('data', __name__)
 
@@ -56,18 +49,34 @@ def fit_data():
 def save_Data():
     data = request.json.get('data')
     username = request.json.get('username')
-    print(username)
-    print(data)
-    
-    if not data:
-      response = jsonify({ 
-        'message': 'No data to save.',
-        'data': None
-      }), 200
 
-    else:
-      response = jsonify({ 
-        'message': 'Data saved.',
-        'data': None
-      }), 200
+    error = None
+    message = 'An error occured. '
+
+    # fetch the user data
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        error = 'User unknown.'
+        message += error
+    if not data:
+        error = 'Data not received.'
+        message += error
+
+    if not error:
+        # save data to db
+        newData = DataFit(
+            filename=data['fileName'], trace_number=data['traceNumber'], 
+            fit_method=data['fitModel'], fit_lowerLim=data['fitRange'][0], 
+            fit_upperLim=data['fitRange'][1], fit_model=data['model']['components'],
+            fit_params=json.dumps(data['model']['params']),
+            comment=data['comment'], user_id=user.id
+        ).save()
+
+        message = f'Data from {user.username} received and saved in database.'
+
+    response = jsonify({ 
+      'status': 'success' if not error else 'fail',
+      'message': message,
+      'error': error,
+    }), 200 if not error else 404
     return response

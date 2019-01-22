@@ -117,3 +117,34 @@ class Log(myBase):
 
     def __repr__(self):
         return f'<Log {self.type} ({self.user.username})>'
+
+
+class DataFit(myBase):
+    __tablename__ = 'datafit'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    filename = Column(String(255), unique=False)
+    trace_number = Column(Integer, nullable=False)
+    fit_method = Column(String(255), unique=False)
+    fit_lowerLim = Column(Integer, nullable=False)
+    fit_upperLim = Column(Integer, nullable=False)
+    fit_model = Column(String(255), unique=False)
+    fit_params = Column(String(255), unique=False)
+    comment = Column(String(255), unique=False)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship('User')
+
+    def __init__(self, filename=None, trace_number=None, 
+                 fit_method=None, fit_lowerLim=None, fit_upperLim=None,
+                 fit_model=None,  fit_params=None, comment=None, user_id=None):
+        self.filename = filename
+        self.trace_number = trace_number
+        self.fit_method = fit_method
+        self.fit_lowerLim = fit_lowerLim
+        self.fit_upperLim = fit_upperLim
+        self.fit_model = fit_model
+        self.fit_params = fit_params
+        self.comment = comment
+        self.user_id = user_id
+
+    def __repr__(self):
+        return f'<Data {self.filename} ({self.trace_number} / {self.comment})>'

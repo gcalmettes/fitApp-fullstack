@@ -63,7 +63,7 @@ def init_engine(uri, clear_db=False):
                             bind=engine)
     if clear_db:
         # create tables if they do not exist
-        from app_server.models import User, Log
+        from app_server.models import User, Log, DataFit
         myBase.metadata.create_all(bind=engine)
         # and clear the tables if they had data in them
         for table in reversed(myBase.metadata.sorted_tables):
