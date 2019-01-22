@@ -33,6 +33,7 @@ class SaveButton extends React.Component {
       type: dataActions.SAVE_DATA_TO_DATABASE, 
       data: { 
         fileName: metaData.fileName,
+        traceNumber: metaData.currentTrace,
         fitModel: analysis.fitModel,
         fitRange: analysis.fitRange,
         comment: [...analysis.comments.list][analysis.comments.selectedIndex],
@@ -60,7 +61,7 @@ class SaveButton extends React.Component {
 const mapStateToProps = ({ authentication, dataset }) => ({ 
   authentication,
   analysis: dataset.analysis,
-  metaData: dataset.metaData
+  metaData: {...dataset.metaData, currentTrace: dataset.display.currentTrace},
 })
 const connectedSaveButton = connect(mapStateToProps)(withStyles(styles)(SaveButton));
 export { connectedSaveButton as SaveButton }; 
