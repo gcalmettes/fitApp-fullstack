@@ -61,7 +61,7 @@ class SaveButton extends React.Component {
 const mapStateToProps = ({ authentication, dataset }) => ({ 
   authentication,
   analysis: dataset.analysis,
-  metaData: {...dataset.metaData, currentTrace: dataset.display.currentTrace},
+  metaData: { ...dataset.metaData, currentTrace: dataset.display.currentTrace },
 })
 const connectedSaveButton = connect(mapStateToProps)(withStyles(styles)(SaveButton));
 export { connectedSaveButton as SaveButton }; 
