@@ -76,7 +76,7 @@ def fitModel(xData, yData, model='DbleExponentialDown'):
         result = {
             # composite model
             "model": {
-                "name": "Model(Reference)",
+                "name": "Model(delta) + Model(constant)",
                 "params": {"c": yData[0], "amplitude": yData[-1]-yData[0]},
                 "x0": x.tolist(),
                 "x": xData.tolist(),
@@ -84,7 +84,7 @@ def fitModel(xData, yData, model='DbleExponentialDown'):
             },
             # sub components
             "components": [{
-                "name": "Model(Delta)",
+                "name": "Model(delta)",
                 "params": ["c", "amplitude"],
                 "y": y.tolist()
             }]
