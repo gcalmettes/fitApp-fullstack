@@ -34,6 +34,7 @@ class SaveButton extends React.Component {
       data: { 
         fileName: metaData.fileName,
         fitModel: analysis.fitModel,
+        fitRange: analysis.fitRange,
         comment: [...analysis.comments.list][analysis.comments.selectedIndex],
         model: {
           components: analysis.model.name,
