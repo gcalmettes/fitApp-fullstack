@@ -50,6 +50,9 @@ def save_Data():
     data = request.json.get('data')
     username = request.json.get('username')
 
+    print(data.get('comment'))
+    
+
     error = None
     message = 'An error occured. '
 
@@ -60,6 +63,9 @@ def save_Data():
         message += error
     if not data:
         error = 'Data not received.'
+        message += error
+    if not data.get('comment'):
+        error = 'A comment needs to be associated with the data.'
         message += error
 
     if not error:
