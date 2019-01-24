@@ -44,14 +44,35 @@ def fit_data():
     }), 200
     return response
 
+@bp.route('/data/view', methods=['POST'])
+@authorization_required
+def view_Data():
+    # User is the name of table that has a column name
+    all_Data = DataFit.query.all()
+    formatted_data = [{
+        'id': data.id,
+        'fileName': data.filename,
+        'traceNumber': data.trace_number,
+        'fitMethod': data.fit_method,
+        'fitRange': [data.fit_lowerLim, data.fit_upperLim],
+        'fitModel': data.fit_model,
+        'fitParams': data.fit_params,
+        'comment': data.comment,
+        } for data in all_Data]
+
+    response = jsonify({ 
+      'status': 'success',
+      'message': f'{len(all_Data)} rows have been retrieved.',
+      'data': formatted_data,
+      'error': None,
+    }), 200
+    return response
+
 @bp.route('/data/save', methods=['POST'])
 @authorization_required
 def save_Data():
     data = request.json.get('data')
-    username = request.json.get('username')
-
-    print(data.get('comment'))
-    
+    username = request.json.get('username')    
 
     error = None
     message = 'An error occured. '
@@ -85,4 +106,19 @@ def save_Data():
       'message': message,
       'error': error,
     }), 200 if not error else 404
+    return response
+
+
+@bp.route('/data/delete', methods=['POST'])
+# @authorization_required
+def delete_Data():
+    idToDelete = request.json.get('id')
+
+    # fetch the user data
+    DataFit.query.filter_by(id=idToDelete).delete()
+
+    response = jsonify({ 
+      'status': 'success',
+      'message': f'ID {idToDelete} deleted',
+    }), 200
     return response
