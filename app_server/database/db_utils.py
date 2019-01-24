@@ -73,5 +73,5 @@ def init_engine(uri, clear_db=False):
         
     else:
         # create tables if they do not exist
-        from app_server.models import User, Log
+        from app_server.models import User, Log, DataFit
         myBase.metadata.create_all(bind=engine)
