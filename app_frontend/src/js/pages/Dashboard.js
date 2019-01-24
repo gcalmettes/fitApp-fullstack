@@ -1,6 +1,12 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { NavBar, DataAnalyzer, ClippedDrawer, drawerWidth } from './../components';
+import { 
+  NavBar, 
+  DataAnalyzer, 
+  ClippedDrawer, 
+  drawerWidth,
+  DataTable
+} from './../components';
 import { Route, Switch } from 'react-router-dom';
 
 
@@ -17,7 +23,7 @@ const tabPanels = [
   { 
     label: 'Database',
     path: '/db',
-    component: <h1>The database view</h1>//() => <h1>The database view</h1>
+    component: <DataTable />//() => <h1>The database view</h1>
   },
   { 
     label: 'Another tab',

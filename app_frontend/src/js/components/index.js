@@ -8,6 +8,7 @@ export * from './FileLoader';
 export * from './GraphDataContext';
 export * from './Brush';
 export * from './NumberTag';
+export * from './DataTable';
 
 export * from './AlertDialog';
 
