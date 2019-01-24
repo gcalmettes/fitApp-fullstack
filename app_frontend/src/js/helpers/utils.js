@@ -11,3 +11,15 @@ export const isEmpty = objectInput => {
    }
    return true;
 }
+
+export const postData = (url = '', data = {}, access_token = null) => {
+  return fetch(url, { 
+    method: 'POST', 
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      ...makeAuthHeader(access_token)
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+}
