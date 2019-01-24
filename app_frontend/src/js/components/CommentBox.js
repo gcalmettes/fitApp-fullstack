@@ -53,6 +53,8 @@ class CommentBox extends React.Component {
           }
         }
       })
+      // erase text
+      event.target.value = ''
     }
   }
 
