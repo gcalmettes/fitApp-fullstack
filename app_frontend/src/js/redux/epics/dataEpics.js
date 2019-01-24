@@ -118,7 +118,6 @@ export const saveDataToDatabase = (action$) => action$.pipe(
       .then(response => response.json())
       .then(result => {
         const { data, message, error } = result
-        console.log(message)
         return ({type: 'DATA SAVED', message, error: error })
       })
       .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
