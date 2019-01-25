@@ -9,6 +9,7 @@ export * from './GraphDataContext';
 export * from './Brush';
 export * from './NumberTag';
 export * from './DataTable';
+export * from './SimpleSnackBar';
 
 export * from './AlertDialog';
 
