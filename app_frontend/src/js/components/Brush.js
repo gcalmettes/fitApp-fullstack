@@ -25,8 +25,18 @@ class Brush extends React.Component {
       .call(this.brush)
   }
 
+  componentWillReceiveProps(){
+    // update brush extent if windows has been resized
+    const currentExtent = this.brush.extent()()
+    if (currentExtent[1][0] !== this.props.width ) {
+      this.brush.extent([[0, 0], [this.props.width, this.props.height]])
+      d3select(this.myBrush.current)
+        .call(this.brush)
+    }
+  }
+
   componentDidUpdate() {
-    const { focusRange, hasData, dispatch } = this.props
+    const { focusRange, hasData, width, height, dispatch } = this.props
     const brushExtent = this.myBrush.current.__brush.selection
     const isCorrectExtent = focusRange && brushExtent && [brushExtent[0][0], brushExtent[1][0]]
       .reduce((curr, val, i) => curr && (focusRange[i] === this.props.scale.invert(val)), true)
