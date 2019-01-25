@@ -13,9 +13,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-import { withStyles } from '@material-ui/core/styles';
-import { theme, addToTheme } from './theme';
-
 
 class DataTable extends React.PureComponent {
   constructor(props) {
