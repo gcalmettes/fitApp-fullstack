@@ -166,7 +166,7 @@ class DataTable extends React.PureComponent {
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Modify entry comment</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}}>
+              <ExpansionPanelDetails className={classes.panelDetails}>
                 <TextField
                   autoFocus
                   required
