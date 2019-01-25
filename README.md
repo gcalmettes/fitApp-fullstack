@@ -53,6 +53,7 @@ python run.py [--options]
 ```
 
 Options available:
+
     - `--dev` (Watch for static files changes)
     - `--host` (Specify host to serve, default=`127.0.0.1`)
     - `--port` (Specify port to serve, default=5000)
