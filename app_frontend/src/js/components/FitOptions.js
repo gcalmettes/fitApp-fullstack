@@ -55,11 +55,13 @@ const getFitOptions = opts => opts.map((d,i) =>
 class FitOptions extends React.Component {
   constructor(props){
     super(props)
-    const { dispatch } = props
-    dispatch({
-      type: dataActions.SET_FIT_OPTIONS, 
-      analysis: { fitModel: fitOptions[0] }
-    })
+    const { fitModel, dispatch } = props
+    if (!fitModel){
+      dispatch({
+        type: dataActions.SET_FIT_OPTIONS, 
+        analysis: { fitModel: fitOptions[0] }
+      })
+    }
   }
 
   selectFitOption(event) {
