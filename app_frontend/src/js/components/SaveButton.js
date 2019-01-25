@@ -7,6 +7,9 @@ import classNames from 'classnames';
 
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import SimpleSnackbar from './SimpleSnackBar';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import green from '@material-ui/core/colors/green';
 
 import { withStyles } from '@material-ui/core/styles';
 import { theme, addToTheme } from './theme';
@@ -22,11 +25,32 @@ const styles = addToTheme(
     iconSmall: {
       fontSize: 20,
     },
+    snackbar: {
+      backgroundColor: green[600],
+    },
+    iconSnackbar: {
+      fontSize: 20,
+      opacity: 0.9,
+      marginRight: theme.spacing.unit,
+    },
   }
 )
 
 class SaveButton extends React.Component {
-  
+  constructor(props){
+    super(props)
+    this.state = {
+      openSnackbar: false,
+    }
+  }
+
+  closeSnackbar(event, reason){
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ openSnackbar: false })
+  }
+
   saveData(){
     const { authentication, metaData, analysis, dispatch } = this.props
     dispatch({
@@ -44,16 +68,27 @@ class SaveButton extends React.Component {
       },
       authentication,
     })
+    this.setState({ openSnackbar: true })
   }
 
   render(){
     const { nTraces, currentTrace, classes } = this.props
 
     return (
-      <Button variant="contained" color="primary" className={classes.button} onClick={this.saveData.bind(this)}>
-        <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-        Save
-      </Button>
+      <React.Fragment>
+        <Button variant="contained" color="primary" className={classes.button} onClick={this.saveData.bind(this)}>
+          <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Save
+        </Button>
+        <SimpleSnackbar 
+          open={this.state.openSnackbar} 
+          onClose={this.closeSnackbar.bind(this)}
+          message={'Data saved!'}
+          specialStyles={classes.snackbar}
+          icon={CheckCircleIcon}
+          iconStyles={classes.iconSnackbar}
+        />
+      </React.Fragment>
     )
   }
 }
