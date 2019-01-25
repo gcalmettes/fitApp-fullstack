@@ -1,8 +1,6 @@
-# Whydah
+# fitApp-fullstack
 
-The [Whydah Gally](https://en.wikipedia.org/wiki/Whydah_Gally), commonly known simply as the Whydah, was a pirate ship was believed to hold treasure from more than 50 ships when it sank in a storm off the coast of Cape Cod on April 26, 1717.
-
-This repo contains the barebone Flask app (React/Redux frontend) that power the lab most valuable data. It will hopefully never sink.
+Fullstack app for custom data fitting.
 
 ### Frontend:
 
@@ -13,10 +11,13 @@ This repo contains the barebone Flask app (React/Redux frontend) that power the 
 ### Backend:
 
 - python [flask](http://flask.pocoo.org) (RESTful API)
+- python [lmfit](https://lmfit.github.io/lmfit-py/) model
 
 ### Database:
 
-- [Sqlite](https://www.sqlite.org/index.html) database (local)
+- [Sqlite](https://www.sqlite.org/index.html) database (local) [easily configurable for remote DB]
+
+<img style="display: block; margin-left: auto; margin-right: auto; width: 100%;" src="https://raw.githubusercontent.com/gcalmettes/fitApp-fullstack/master/sample-data/screenshot-app.png"></img>
 
 # Build and launch the app
 
@@ -31,35 +32,33 @@ npm install
 npm run build
 ```
 
-2. Export the FLASK_APP environment variable
+2. Set up your configuration variables
 
-In the repository folder:
-
-```
-export FLASK_APP=backend
-
-# optionally set the environment to DEBUG mode
-export FLASK_ENV=development
-```
+See `__init__.py` file in the `config` folder.
 
 3. Initialize empty SQLite database
 
 In the repository folder:
 
 ```
-# (in root folder)
-flask init-db
+python run.py --initdb
 ```
 
-4. Launch the app
+4. Run the backend
 
 In the repository folder:
 
 ```
-flask run
-
-# if the server needs to be externally visible:
-# flask run --host=0.0.0.0
+python run.py [--options]
 ```
 
-go to `http://127.0.0.1:5000/`
+Options available:
+    - `--dev` (Watch for static files changes)
+    - `--host` (Specify host to serve, default=`127.0.0.1`)
+    - `--port` (Specify port to serve, default=5000)
+    - `--initdb`, (Initialize database)
+    - `--test` (Run the test suite)
+
+5. Launch the app
+
+Open a browser and go to `http://127.0.0.1:5000/` (or the specific host/port defined by your options)
