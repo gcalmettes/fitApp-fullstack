@@ -5,7 +5,6 @@ import { logout } from './../redux'
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
@@ -101,9 +100,6 @@ class Navigation extends React.Component {
     ) 
   }
 }
-
-// export const NavBar = withStyles(styles)(Navigation);
-
 
 const NavBar = withStyles(styles)(Navigation);
 
