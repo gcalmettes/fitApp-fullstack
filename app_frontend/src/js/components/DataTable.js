@@ -97,7 +97,7 @@ class DataTable extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{`You selected entry #${id}?`}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{`You selected entry #${id}`}</DialogTitle>
           <DialogContent>
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
