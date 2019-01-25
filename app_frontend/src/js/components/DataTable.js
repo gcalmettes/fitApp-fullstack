@@ -13,6 +13,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 class DataTable extends React.PureComponent {
   constructor(props) {
@@ -41,13 +46,41 @@ class DataTable extends React.PureComponent {
   deleteDbEntry(id){
     const { authentication: { access_token }, dispatch } = this.props
     postData('/data/delete', { id }, access_token)
-      .then(response => this.setState({data: response.data}))
+      .then(response => this.setState({
+        data: response.data,
+        idToDelete: null,
+        enteredId: null,
+        alert: (
+          <Dialog
+            open={true}
+            onClose={this.hideAlert}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{`Entry #${this.state.idToDelete} was deleted`}</DialogTitle>
+          </Dialog>
+        )
+      }))
   }
 
   modifyCommentDbEntry(id, newComment){
     const { authentication: { access_token }, dispatch } = this.props
     postData('/data/modify_comment', { id, newComment }, access_token)
-      .then(response => this.setState({data: response.data}))
+      .then(response => this.setState({
+        data: response.data,
+        idToDelete: null,
+        enteredId: null,
+        alert: (
+          <Dialog
+            open={true}
+            onClose={this.hideAlert}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{`The comment of entry #${this.state.idToDelete} was modified.`}</DialogTitle>
+          </Dialog>
+        )
+      }))
   }
 
   hideAlert(){
@@ -64,39 +97,50 @@ class DataTable extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{`Are you sure you want to delete entry ${id}?`}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{`You selected entry #${id}?`}</DialogTitle>
           <DialogContent>
-            <Typography>
-              Fill below to delete
-            </Typography>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="id"
-              label="Confirm id to delete"
-              fullWidth
-              onChange={e => this.setState({ enteredId: e.target.value })}
-              onKeyDown={e => (e.keyCode == 13) ? this.onConfirm() : null}
-            />
-            <Typography>
-              Fill below to modify
-            </Typography>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="id"
-              label="Enter new comment"
-              fullWidth
-              onChange={e => this.setState({ enteredComment: e.target.value })}
-              onKeyDown={e => (e.keyCode == 13) ? this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment) : null}
-            />
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Delete entry</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <TextField
+                  autoFocus
+                  required
+                  margin="dense"
+                  id="id"
+                  label="Confirm id to delete"
+                  fullWidth
+                  onChange={e => this.setState({ enteredId: e.target.value })}
+                  onKeyDown={e => (e.keyCode == 13) && this.onConfirm()}
+                />
+                <Button onClick={this.onConfirm} color="primary">
+                  Confirm
+                </Button>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Modify entry comment</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <TextField
+                  autoFocus
+                  required
+                  margin="dense"
+                  id="id"
+                  label="Enter new comment"
+                  fullWidth
+                  onChange={e => this.setState({ enteredComment: e.target.value })}
+                  onKeyDown={e => (e.keyCode == 13) && this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment)}
+                />
+                <Button onClick={() => this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment)} color="primary">
+                  Confirm
+                </Button>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.onConfirm} color="primary">
-              Confirm
-            </Button>
             <Button onClick={this.hideAlert} color="primary" autoFocus>
               Cancel
             </Button>
@@ -109,20 +153,6 @@ class DataTable extends React.PureComponent {
   onConfirm() {
     if (Number(this.state.enteredId) === Number(this.state.idToDelete)){
       this.deleteDbEntry(this.state.enteredId)
-      this.setState({
-        idToDelete: null,
-        enteredId: null,
-        alert: (
-          <Dialog
-            open={true}
-            onClose={this.hideAlert}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{`The row associated with ${this.state.idToDelete} was deleted`}</DialogTitle>
-          </Dialog>
-        )
-      })
     } else {
       this.setState({
         enteredId: null,
