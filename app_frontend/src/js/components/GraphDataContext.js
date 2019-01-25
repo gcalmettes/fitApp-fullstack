@@ -12,7 +12,7 @@ import { isEmpty } from './../helpers'
 class GraphDataContext extends React.Component {
 
   render(){
-    let { traces, currentTrace, margins } = this.props
+    let { traces, currentTrace, width, margins } = this.props
     const data = !isEmpty(traces) 
       ? traces[`trace${currentTrace-1}`] 
       : []
@@ -21,8 +21,7 @@ class GraphDataContext extends React.Component {
       ? margins
       : {left: 20, top: 10, right: 20, bottom: 10} 
 
-    const width = 600,
-          height = 60,
+    const height = 60,
           innerWidth = width - margins.left - margins.right,
           innerHeight = height - margins.top - margins.bottom
 

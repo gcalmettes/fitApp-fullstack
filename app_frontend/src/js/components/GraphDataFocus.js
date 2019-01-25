@@ -48,7 +48,7 @@ const updateFitRange = (idx, currentFitRange, dispatch, clear) => {
 
 
 const GraphDataFocus = (props) => {
-  let { traces, currentTrace, fitRange, modelData, focusRange, margins, dispatch} = props
+  let { traces, currentTrace, fitRange, modelData, focusRange, margins, width, dispatch} = props
 
   const data = !isEmpty(traces) 
     ? traces[`trace${currentTrace-1}`] 
@@ -58,8 +58,7 @@ const GraphDataFocus = (props) => {
     ? margins
     : {left: 55, top: 20, right: 20, bottom: 45} 
 
-  const width = 600,
-        height = 350,
+    const height = 350,
         innerWidth = width - margins.left - margins.right,
         innerHeight = height - margins.top - margins.bottom
 

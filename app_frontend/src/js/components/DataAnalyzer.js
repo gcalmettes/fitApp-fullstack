@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { throttle } from './../helpers'
+
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
@@ -40,8 +42,50 @@ const styles = addToTheme(
   }
 )
 
-export const DataAnalyzer = withStyles(styles)(props => {
-    const { classes } = props
+const delay = 150
+
+class DataAnalyzer extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      width:  800,
+      height: 182
+    }
+
+    this.updateDimensions = this.updateDimensions.bind(this)
+    this.updateDimensionsPerf = throttle(this.updateDimensions.bind(this), delay)
+  }
+
+  // Add event listener
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensionsPerf);
+  }
+
+  // Calculate & Update state of new dimensions
+  updateDimensions() {
+    const w = window,
+          d = document,
+              documentElement = d.documentElement,
+              body = d.getElementsByTagName('body')[0],
+              width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+              height = w.innerHeight || documentElement.clientHeight || body.clientHeight
+
+    if(window.innerWidth < 700) {
+      this.setState({ width: 700, height });
+    } else {
+      this.setState({ width, height });
+    }
+  }
+
+  // Remove event listener
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensionsPerf);
+  }
+
+  render(){
+    const { classes } = this.props
+
     return (
       <React.Fragment>
         <ClippedDrawer className={classes.drawer}>
@@ -59,10 +103,10 @@ export const DataAnalyzer = withStyles(styles)(props => {
               <NumberTag />
             </Grid>
             <Grid item xs={12}>
-              <GraphDataContext />
+              <GraphDataContext width={this.state.width-drawerWidth}/>
             </Grid>
             <Grid item xs={12}>
-              <GraphDataFocus />
+              <GraphDataFocus width={this.state.width-drawerWidth}/>
             </Grid>
             <Grid item xs={12}>
               <GraphFitGridComponents />
@@ -71,4 +115,8 @@ export const DataAnalyzer = withStyles(styles)(props => {
         </div>
       </React.Fragment>
     );
-})
+  }
+}
+
+const styledDataAnalyzer = withStyles(styles)(DataAnalyzer)
+export { styledDataAnalyzer as DataAnalyzer }
