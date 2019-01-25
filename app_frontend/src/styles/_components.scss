@@ -1,0 +1,8 @@
+
+/* GraphDataFocus */
+
+.clipped {
+  /* referencing path from external SVG */
+  clip-path: url("#clipMask");
+  -webkit-clip-path: url("#clipMask");
+}
