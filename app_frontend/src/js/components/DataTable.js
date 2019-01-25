@@ -18,6 +18,22 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import { withStyles } from '@material-ui/core/styles';
+import { theme, addToTheme } from './theme';
+
+const styles = addToTheme(
+  {
+    panelDetails: {
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+    },
+    button: {
+      width: '50%',
+      marginTop: '10px',
+    },
+  }
+)
 
 class DataTable extends React.PureComponent {
   constructor(props) {
@@ -88,6 +104,7 @@ class DataTable extends React.PureComponent {
   }
 
   showConfirmationId(id){
+    const { classes } = this.props
     this.setState({
       idToDelete: id,
       alert: (
@@ -103,7 +120,7 @@ class DataTable extends React.PureComponent {
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Delete entry</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
+              <ExpansionPanelDetails className={classes.panelDetails}>
                 <TextField
                   autoFocus
                   required
@@ -114,7 +131,13 @@ class DataTable extends React.PureComponent {
                   onChange={e => this.setState({ enteredId: e.target.value })}
                   onKeyDown={e => (e.keyCode == 13) && this.onConfirm()}
                 />
-                <Button onClick={this.onConfirm} color="primary">
+                <Button 
+                  variant="contained" 
+                  size="small" 
+                  onClick={this.onConfirm} 
+                  color="primary"
+                  className={classes.button}
+                >
                   Confirm
                 </Button>
               </ExpansionPanelDetails>
@@ -123,7 +146,7 @@ class DataTable extends React.PureComponent {
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Modify entry comment</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
+              <ExpansionPanelDetails style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}}>
                 <TextField
                   autoFocus
                   required
@@ -134,7 +157,13 @@ class DataTable extends React.PureComponent {
                   onChange={e => this.setState({ enteredComment: e.target.value })}
                   onKeyDown={e => (e.keyCode == 13) && this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment)}
                 />
-                <Button onClick={() => this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment)} color="primary">
+                <Button 
+                  variant="contained" 
+                  size="small" 
+                  onClick={() => this.modifyCommentDbEntry(this.state.idToDelete, this.state.enteredComment)}
+                  color="primary"
+                  className={classes.button}
+                  >
                   Confirm
                 </Button>
               </ExpansionPanelDetails>
@@ -245,5 +274,5 @@ class DataTable extends React.PureComponent {
 const mapStateToProps = ({ authentication }) => ({ 
   authentication,
 })
-const connectedDataTable = connect(mapStateToProps)(DataTable);
+const connectedDataTable = connect(mapStateToProps)(withStyles(styles)(DataTable));
 export { connectedDataTable as DataTable }; 
