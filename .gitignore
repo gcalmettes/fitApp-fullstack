@@ -107,6 +107,7 @@ venv.bak/
 .DS_Store
 
 # Files built by app
-frontend/node_modules/
-frontend/dist/
+app_frontend/node_modules
+app_frontend/node_modules/
+app_frontend/dist/
 

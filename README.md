@@ -1,10 +1,11 @@
 # fitApp-fullstack
 
-Fullstack app for custom FRET data analysis.
+Fullstack app for custom data fitting.
 
 ### Frontend:
 
-- [React](https://reactjs.org)/[D3](https://d3js.org) for interactive UI
+- [React](https://reactjs.org)/[Redux](https://redux.js.org)/[D3](https://d3js.org) for interactive UI
+- [Rxjs](https://rxjs-dev.firebaseapp.com) to handle asynchronous events
 - [Webpack](https://webpack.js.org) to manage/bundle assets and build
 
 ### Backend:
@@ -14,7 +15,7 @@ Fullstack app for custom FRET data analysis.
 
 ### Database:
 
-- [Sqlite](https://www.sqlite.org/index.html) database (local)
+- [Sqlite](https://www.sqlite.org/index.html) database (local) [easily configurable for remote DB]
 
 <img style="display: block; margin-left: auto; margin-right: auto; width: 100%;" src="https://raw.githubusercontent.com/gcalmettes/fitApp-fullstack/master/sample-data/screenshot-app.png"></img>
 
@@ -31,32 +32,33 @@ npm install
 npm run build
 ```
 
-2. Export the FLASK_APP environment variable
+2. Set up your configuration variables
 
-In the repository folder:
-
-```
-export FLASK_APP=backend
-
-# optionally set the environment to DEBUG mode
-export FLASK_ENV=development
-```
+See `__init__.py` file in the `config` folder.
 
 3. Initialize empty SQLite database
 
 In the repository folder:
 
 ```
-# (in root folder)
-flask init-db
+python run.py --initdb
 ```
 
-4. Launch the app
+4. Run the backend
 
 In the repository folder:
 
 ```
-flask run
+python run.py [--options]
 ```
 
-go to `http://127.0.0.1:5000/`
+Options available:
+    - `--dev` (Watch for static files changes)
+    - `--host` (Specify host to serve, default=`127.0.0.1`)
+    - `--port` (Specify port to serve, default=5000)
+    - `--initdb`, (Initialize database)
+    - `--test` (Run the test suite)
+
+5. Launch the app
+
+Open a browser and go to `http://127.0.0.1:5000/` (or the specific host/port defined by your options)
