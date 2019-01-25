@@ -110,15 +110,24 @@ def save_Data():
 
 
 @bp.route('/data/delete', methods=['POST'])
-# @authorization_required
+@authorization_required
 def delete_Data():
     idToDelete = request.json.get('id')
 
     # fetch the user data
-    DataFit.query.filter_by(id=idToDelete).delete()
+    row = DataFit.query.filter_by(id=idToDelete).first()
+    row.delete()
 
-    response = jsonify({ 
-      'status': 'success',
-      'message': f'ID {idToDelete} deleted',
-    }), 200
-    return response
+    return view_Data()
+
+@bp.route('/data/modify_comment', methods=['POST'])
+@authorization_required
+def modify_Data():
+    idToModify = request.json.get('id')
+    new_comment = request.json.get('newComment')
+
+    # fetch the user data
+    row = DataFit.query.filter_by(id=idToModify).first()
+    row.comment = new_comment
+
+    return view_Data()
