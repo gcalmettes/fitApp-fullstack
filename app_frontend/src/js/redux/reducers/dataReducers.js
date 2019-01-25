@@ -1,4 +1,4 @@
-import { dataActions } from './../actionTypes';
+import { dataActions, authenticationActions } from './../actionTypes';
 
 export const dataset = (
   state = { 
@@ -27,6 +27,30 @@ export const dataset = (
   ) => {
     const { type, metaData, display, analysis, message, error } = action
     switch (type) {
+      case dataActions.CLEAN:
+        return {
+          metaData: {
+            fileName: '', 
+            data: {}, 
+            size: 0,
+          }, 
+          display: {
+            currentTrace: 1,
+            focusRange: null,
+          },
+          analysis: {
+            fitRange: null,
+            fitModel: null,
+            model: null,
+            components: null,
+            comments: {
+              list: [],
+              selectedIndex: null
+            }
+          },
+          message: null, 
+          error: null
+        };
       case dataActions.INCOMING_DATA:
         return {
           metaData: { ...state.metaData, ...metaData },
