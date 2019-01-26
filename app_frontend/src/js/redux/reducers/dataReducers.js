@@ -27,7 +27,7 @@ export const dataset = (
   ) => {
     const { type, metaData, display, analysis, message, error } = action
     switch (type) {
-      case dataActions.CLEAN:
+      case authenticationActions.LOGOUT_SUCCESS:
         return {
           metaData: {
             fileName: '', 

@@ -27,7 +27,6 @@ export const navigationActions = {
 
 export const dataActions = {
 
-  CLEAN: 'CLEAN',
   PROCESS_FILE: 'PROCESS_FILE',
   INCOMING_DATA: 'INCOMING_DATA',
   PREVIOUS_TRACE: 'PREVIOUS_TRACE',

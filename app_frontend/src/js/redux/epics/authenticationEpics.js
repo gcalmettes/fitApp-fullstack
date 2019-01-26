@@ -2,7 +2,6 @@ import { ofType } from 'redux-observable';
 import { mapTo, switchMap } from 'rxjs/operators';
 
 import { 
-  dataActions,
   authenticationActions,
   navigationActions
 } from './../actionTypes'
@@ -71,7 +70,7 @@ export const logout = (action$) => action$.pipe(
       .then(result => {
         const { status, message, error } = result
         return (!error)
-        ? ({type: dataActions.CLEAN})
+        ? ({type: authenticationActions.LOGOUT_SUCCESS})
         : ({type: authenticationActions.LOGOUT_FAILURE, error })
         
       })
