@@ -19,6 +19,7 @@ class User(myBase):
     registered_on = Column(DateTime, nullable=False)
     admin = Column(Boolean, nullable=False, default=False)
     logs = relationship('Log')
+    datafit = relationship('DataFit')
 
     def __init__(self, firstname=None, lastname=None, 
                  username=None, password=None, admin=False):
