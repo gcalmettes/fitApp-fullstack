@@ -3,7 +3,7 @@ from config import TestingConfig, DevelopmentConfig
 def test_development_config(app):
     app.config.from_object(DevelopmentConfig)
     assert not app.config['TESTING']
-    assert app.config['SQLALCHEMY_DATABASE_URI'] == 'sqlite:////Users/gcalmettes/Git/whydah/instance/treasure.sqlite3'
+    assert app.config['SQLALCHEMY_DATABASE_URI'] == 'sqlite:////Users/gcalmettes/Git/fitApp-fullstack/instance/treasure.sqlite3'
 
 
 def test_testing_config(app):
