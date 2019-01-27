@@ -17,6 +17,9 @@ Fullstack app for custom data fitting.
 
 - [Sqlite](https://www.sqlite.org/index.html) database (local) [easily configurable for remote DB]
 
+### Authentication:
+- [JSON Web Tokens](https://jwt.io)
+
 <img style="display: block; margin-left: auto; margin-right: auto; width: 100%;" src="https://raw.githubusercontent.com/gcalmettes/fitApp-fullstack/master/sample-data/screenshot-app.png"></img>
 
 # Build and launch the app
