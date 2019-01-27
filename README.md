@@ -65,4 +65,6 @@ Options available:
 
 5. Launch the app
 
-Open a browser and go to `http://127.0.0.1:5000/` (or the specific host/port defined by your options)
+Open a browser and go to `http://127.0.0.1:5000/` (or the specific host/port defined by your options). You'll be redirected to `http://127.0.0.1:5000/login` where you'll be able to enter your credentials.
+
+If no users were registered before, you will problably need to go to `http://127.0.0.1:5000/register` to add an authorized user. Upon validation you'll be redirected to the `/login` page.
