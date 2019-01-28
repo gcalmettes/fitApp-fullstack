@@ -10,6 +10,7 @@ export * from './Brush';
 export * from './NumberTag';
 export * from './DataTable';
 export * from './SimpleSnackBar';
+export * from './Utilities';
 
 export * from './AlertDialog';
 

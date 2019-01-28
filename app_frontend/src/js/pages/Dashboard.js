@@ -5,7 +5,8 @@ import {
   DataAnalyzer, 
   ClippedDrawer, 
   drawerWidth,
-  DataTable
+  DataTable,
+  Utilities
 } from './../components';
 import { Route, Switch } from 'react-router-dom';
 
@@ -26,9 +27,9 @@ const tabPanels = [
     component: <DataTable />//() => <h1>The database view</h1>
   },
   { 
-    label: 'Another tab',
+    label: 'Utilities',
     path: '/other', 
-    component: <h1>Another view</h1>//() => <h1>Another view</h1>
+    component: <Utilities />//() => <h1>Another view</h1>
   }
 ]
 
