@@ -131,3 +131,22 @@ def modify_Data():
     row.comment = new_comment
 
     return view_Data()
+
+@bp.route('/data/export', methods=['POST'])
+@authorization_required
+def export_Data():
+    # cols = [c.name for c in DataFit.__table__.columns]
+    # pk = [c.name for c in DataFit.__table__.primary_key]
+    # tuplefied_list = [(getattr(item, col) for col in cols) for item in DataFit.query.all()]
+    # df = pd.DataFrame.from_records(tuplefied_list, index=pk, columns=cols)
+    import pandas as pd
+    df = pd.read_sql_table('datafit', DataFit.query.session.get_bind())
+    # df['user'] = [record.user.username for record in DataFit.query.all()]
+    data = df.to_json(orient='records')
+
+    response = jsonify({ 
+      'status': 'success',
+      'data': data,
+      'message': 'The data have been exported.',
+    }), 200
+    return response
