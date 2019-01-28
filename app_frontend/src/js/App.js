@@ -26,8 +26,3 @@ export const App = () => {
     </Router>
   </MuiThemeProvider>
 }
-
-// <Route exact path="/" render={() => <Redirect to="/analysis/interface" />}/>
-//         <Route exact path="/test" component={() => <h1>test</h1>} />
-//         <Route path="/analysis" component={Dashboard} />
-//         <Route render={() => <h1>Wrong url</h1>} />
