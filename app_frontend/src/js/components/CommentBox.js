@@ -5,7 +5,6 @@ import { dataActions } from './../redux/actionTypes';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import TextField from '@material-ui/core/TextField';
 
 import { drawerWidth } from './ClippedDrawer'
