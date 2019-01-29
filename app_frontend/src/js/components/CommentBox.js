@@ -20,8 +20,8 @@ const styles = addToTheme(
       maxWidth: drawerWidth,
       backgroundColor: theme.palette.background.paper,
       overflow: 'auto',
-      height: 200,
-      maxHeight: 200,
+      height: 175,
+      maxHeight: 175,
     },
   }
 )
