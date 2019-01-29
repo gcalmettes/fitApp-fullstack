@@ -31,6 +31,7 @@ const styles = addToTheme(
     },
     button: {
       margin: theme.spacing.unit*3,
+      minHeight: '36px',
     },
     leftIcon: {
       marginRight: theme.spacing.unit,

@@ -18,6 +18,7 @@ const styles = addToTheme(
   {
     button: {
       margin: theme.spacing.unit*3,
+      minHeight: '36px',
     },
     leftIcon: {
       marginRight: theme.spacing.unit,
@@ -72,7 +73,7 @@ class SaveButton extends React.Component {
   }
 
   render(){
-    const { nTraces, currentTrace, classes } = this.props
+    const { nTraces, currentTrace, analysis, classes } = this.props
 
     return (
       <React.Fragment>
@@ -83,7 +84,7 @@ class SaveButton extends React.Component {
         <SimpleSnackbar 
           open={this.state.openSnackbar} 
           onClose={this.closeSnackbar.bind(this)}
-          message={'Data saved!'}
+          message={`${analysis.fitModel} data saved!`}
           specialStyles={classes.snackbar}
           icon={CheckCircleIcon}
           iconStyles={classes.iconSnackbar}
