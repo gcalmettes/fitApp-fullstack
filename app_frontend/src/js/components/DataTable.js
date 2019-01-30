@@ -251,7 +251,7 @@ class DataTable extends React.PureComponent {
             onRowDoubleClick={event => this.showConfirmationId(event.rowData.id)}
             columns={[
               {
-                width: 50,
+                width: 60,
                 label: 'ID',
                 dataKey: 'id',
               },
