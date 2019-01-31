@@ -128,7 +128,7 @@ def modify_Data():
 
     # fetch the user data
     row = DataFit.query.filter_by(id=idToModify).first()
-    row.comment = new_comment
+    row.update(comment= new_comment)
 
     return view_Data()
 
