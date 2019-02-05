@@ -1,5 +1,4 @@
 class BaseConfig(object):
-    FRONTEND_FOLDER_NAME = 'app_frontend'
     ENV='production'
     TESTING = False
     # sqlite :memory: identifier is the default if no filepath is present
