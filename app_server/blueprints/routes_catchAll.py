@@ -23,6 +23,7 @@ def serve_static_css(filename):
   return send_from_directory(static_dir / "styles", filename)
 
 @bp.route('/', defaults={'path': ''})
+@bp.route("/<string:path>")
 @bp.route('/<path:path>')
 def catch_all(path):
     return render_template("index.html")
