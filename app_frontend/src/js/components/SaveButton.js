@@ -60,7 +60,8 @@ class SaveButton extends React.Component {
     this.state = {
       openSnackbar: false,
       currentId: '',
-      saved: []
+      saved: [],
+      latestSaved: ''
     }
   }
 
@@ -74,7 +75,7 @@ class SaveButton extends React.Component {
     const { metaData: { fileName, currentTrace } } = this.props
     const id = `${fileName}-${currentTrace}`
     if (id !== this.state.currentId) {
-      this.setState({ currentId: id, saved: [] })
+      this.setState({ currentId: id, saved: [], latestSaved: '' })
     }
   }
 
@@ -102,7 +103,11 @@ class SaveButton extends React.Component {
       },
       authentication,
     })
-    this.setState({ openSnackbar: true, saved: [...this.state.saved, `${[...analysis.comments.list][analysis.comments.selectedIndex]} | ${analysis.fitModel}`] })
+    this.setState({ 
+      openSnackbar: true, 
+      saved: [...this.state.saved, `${[...analysis.comments.list][analysis.comments.selectedIndex]} | ${analysis.fitModel}`],
+      latestSaved: `${analysis.fitModel}` 
+    })
   }
 
   render(){
@@ -123,7 +128,7 @@ class SaveButton extends React.Component {
         <SimpleSnackbar 
           open={this.state.openSnackbar} 
           onClose={this.closeSnackbar.bind(this)}
-          message={`${analysis.fitModel} data saved!`}
+          message={`${this.state.latestSaved} data saved!`}
           specialStyles={classes.snackbar}
           icon={CheckCircleIcon}
           iconStyles={classes.iconSnackbar}
