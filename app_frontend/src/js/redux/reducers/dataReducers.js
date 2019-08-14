@@ -67,6 +67,58 @@ export const dataset = (
           message,
           error
         };
+      case dataActions.REPLACE_TRACE:
+        const correctedTrace = {[`trace${state.display.currentTrace-1}`]: analysis.correctedData }
+        return {
+          metaData: { 
+            fileName: state.metaData.fileName, 
+            data: { ...state.metaData.data, ...correctedTrace }, 
+            size: state.metaData.size,
+            originalData: { 
+              ...state.metaData.originalData, 
+              [`trace${state.display.currentTrace-1}`]: state.metaData.data[`trace${state.display.currentTrace-1}`] 
+            }, // save original trace before modification
+          },
+          display: { ...state.display },
+          analysis: {
+            ...state.analysis,
+            model: null,
+            components: null
+          },
+          message,
+          error
+        };
+      case dataActions.REVERT_CORRECTION:
+        const traceToRevert = metaData.traceName
+
+        const originalTrace = state.metaData.originalData && state.metaData.originalData[traceToRevert]
+          ? {[traceToRevert]: state.metaData.originalData[traceToRevert]}
+          : {}
+
+        const metaOriginal = state.metaData.originalData
+          ? state.metaData.originalData
+          : {}
+
+        // delete the saved original data since we moved it back to the state
+        delete metaOriginal[traceToRevert]
+
+        
+        return {
+          metaData: { 
+            fileName: state.metaData.fileName, 
+            data: { ...state.metaData.data, ...originalTrace }, 
+            size: state.metaData.size,
+            originalData: { ...metaOriginal },
+          },
+          display: { ...state.display },
+          analysis: {
+            ...state.analysis,
+            model: null,
+            components: null
+          },
+          message,
+          error
+        };
       case dataActions.CLEAR_DATA:
         return {
           metaData: null,

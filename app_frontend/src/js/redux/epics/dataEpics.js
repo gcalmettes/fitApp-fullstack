@@ -102,6 +102,33 @@ export const sendDataToFit = (action$) => action$.pipe(
 )
 
 
+export const sendDataToCorrection = (action$) => action$.pipe(
+  ofType(dataActions.SEND_DATA_TO_CORRECTION),
+  switchMap( action => {
+    const { correctionSettings: { trace, startIdx } } = action
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({ data: { ...trace }, startIdx })
+    };
+    return fetch('/data/correct', requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        const { data, message, error } = result
+
+        return ({
+          type: dataActions.REPLACE_TRACE, 
+          analysis: { ...data }, 
+          message, error: error })
+      })
+      .catch((error) => ({type: alertActions.SHOW_ALERT, error: error.message }))
+    }
+  )
+)
+
+
 export const saveDataToDatabase = (action$) => action$.pipe(
   ofType(dataActions.SAVE_DATA_TO_DATABASE),
   switchMap( action => {

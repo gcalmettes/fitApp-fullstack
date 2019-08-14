@@ -11,6 +11,7 @@ import { GraphDataContext } from './GraphDataContext'
 import { GraphDataFocus } from './GraphDataFocus'
 import { NumberTag } from './NumberTag'
 import { GraphFitGridComponents } from './GraphFitGridComponents'
+import { TrendCorrector } from './TrendCorrector'
 import { FitOptions } from './FitOptions'
 import { SaveButton } from './SaveButton'
 import { CommentBox } from './CommentBox'
@@ -90,9 +91,11 @@ class DataAnalyzer extends React.Component {
       <React.Fragment>
         <ClippedDrawer className={classes.drawer}>
           <FitOptions />
-        <Divider />
-        <CommentBox />
-        <SaveButton />
+          <Divider />
+          <CommentBox />
+          <SaveButton />
+          <Divider />
+          <TrendCorrector />
         </ClippedDrawer>
         <div className={classes.root}>
           <Grid container spacing={0} className={classes.gridContainer}>

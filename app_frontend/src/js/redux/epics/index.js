@@ -15,6 +15,7 @@ import { catchError } from './errorEpics';
 import { 
   processFile,
   sendDataToFit, 
+  sendDataToCorrection,
   saveDataToDatabase,
 } from './dataEpics';
 
@@ -29,5 +30,6 @@ export const rootEpics = combineEpics(
   logout,
   processFile,
   sendDataToFit,
+  sendDataToCorrection,
   saveDataToDatabase
 )

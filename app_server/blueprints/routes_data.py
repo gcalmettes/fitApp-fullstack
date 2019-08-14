@@ -6,7 +6,7 @@ import json
 
 from app_server.security.authorization import authorization_required
 
-from data_processing import utils, fitmethods
+from data_processing import utils, fitmethods, trendcorrection
 from app_server.models import User, DataFit
 
 bp = Blueprint('data', __name__)
@@ -30,7 +30,7 @@ def get_Data():
       }), 200
     return response
 
-@bp.route('/data/fit', methods = ['POST'])
+@bp.route('/data/fit', methods=['POST'])
 def fit_data():
     data = request.json.get('data')
     fit_type = request.json.get('type')
@@ -41,6 +41,20 @@ def fit_data():
     response = jsonify({
       'data': fit_data,
       'message': 'Fitting process executed.'
+    }), 200
+    return response
+
+@bp.route('/data/correct', methods=['POST'])
+def correct_trend():
+    data = request.json.get('data')
+    startIdx = request.json.get('startIdx', 0)
+
+    data = utils.convertJSONtoDF(data).transpose()
+    corrected_data = trendcorrection.correct_data(data.x.values, data.y.values, startIdx=startIdx)
+
+    response = jsonify({
+      'data': corrected_data,
+      'message': 'Trend correction applied.'
     }), 200
     return response
 

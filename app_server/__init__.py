@@ -46,6 +46,10 @@ def create_app(config=None, clear_db=False):
                 db_session.rollback()
                 print('Session has been rolled back...')
                 return exception_or_response
+            except IntegrityError:
+                db.session.rollback()
+                print('Session has been rolled back...')
+                return exception_or_response
         # close session
         db_session.remove()
         return exception_or_response
