@@ -105,13 +105,13 @@ export const sendDataToFit = (action$) => action$.pipe(
 export const sendDataToCorrection = (action$) => action$.pipe(
   ofType(dataActions.SEND_DATA_TO_CORRECTION),
   switchMap( action => {
-    const { correctionSettings: { trace, startIdx } } = action
+    const { correctionSettings: { trace, startIdx, endIdx } } = action
     const requestOptions = {
       method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
-      body: JSON.stringify({ data: { ...trace }, startIdx })
+      body: JSON.stringify({ data: { ...trace }, startIdx, endIdx })
     };
     return fetch('/data/correct', requestOptions)
       .then(response => response.json())

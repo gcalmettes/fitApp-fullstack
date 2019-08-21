@@ -48,9 +48,10 @@ def fit_data():
 def correct_trend():
     data = request.json.get('data')
     startIdx = request.json.get('startIdx', 0)
+    endIdx = request.json.get('endIdx', 0)
 
     data = utils.convertJSONtoDF(data).transpose()
-    corrected_data = trendcorrection.correct_data(data.x.values, data.y.values, startIdx=startIdx)
+    corrected_data = trendcorrection.correct_data(data.x.values, data.y.values, startIdx=startIdx, endIdx=endIdx)
 
     response = jsonify({
       'data': corrected_data,

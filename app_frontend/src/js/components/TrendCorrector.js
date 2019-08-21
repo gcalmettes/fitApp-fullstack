@@ -56,7 +56,7 @@ class Corrector extends React.Component {
       const [minLim, maxLim] = fitRange
       dispatch({
         type: dataActions.SEND_DATA_TO_CORRECTION, 
-        correctionSettings: { trace, startIdx: minLim }
+        correctionSettings: { trace, startIdx: minLim, endIdx: maxLim }
       })
     }
   }

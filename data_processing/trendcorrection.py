@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 
-def correct_data(xData, yData, startIdx=0):
+def correct_data(xData, yData, startIdx=0, endIdx=-1):
     y = yData
     # start x at zero
     x = xData - xData[0]
@@ -14,13 +14,13 @@ def correct_data(xData, yData, startIdx=0):
     params = lr.make_params()
 
     # fit model
-    xSelection = x[startIdx:]
-    ySelection = y[startIdx:]
+    xSelection = x[startIdx:endIdx]
+    ySelection = y[startIdx:endIdx]
     outParams = lr.fit(ySelection, params, x=xSelection)
 
     # construct corrected data
-    yRemoved_trend = ySelection - outParams.best_fit + outParams.best_fit[0]
-    yCorrected = np.concatenate([yData[:startIdx], yRemoved_trend])
+    linear_trend = x * outParams.best_values['slope'] + outParams.best_values['intercept']
+    yCorrected = y - linear_trend + y[0]
 
     result = {
         "correctedData": json.loads(
