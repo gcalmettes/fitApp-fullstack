@@ -46,6 +46,7 @@ const fitOptions = [
   'DbleExponentialDown', 
   'SingleExponentialUp',
   'SingleExponentialDown',
+  'SingleExponentialUnconstrained',
   'Reference'
 ]
 

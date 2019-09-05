@@ -23,6 +23,13 @@ def makeSingleModelParams(model, c=1.4, d1=15., a1=0.5):
     params['amplitude'].set(a1)
     return params
 
+def makeSingleModelParamsUnconstrained(model, c=1.4, d1=15., a1=0.5):
+    params = model.make_params()
+    params['c'].set(c)
+    params['decay'].set(d1, min=0.1)
+    params['amplitude'].set(a1)
+    return params
+
 
 ## Double decreasing exponential composite Model
 ## and correspondind initial parameters
@@ -67,6 +74,11 @@ def fitModel(xData, yData, model='DbleExponentialDown'):
         components = makeSingleExpoModel()
         [fullModel, *subComponents] = components
         params = makeSingleModelParams(fullModel, c=1.7, d1=15., a1=-0.5)
+    if model == 'SingleExponentialUnconstrained':
+        # make composite model
+        components = makeSingleExpoModel()
+        [fullModel, *subComponents] = components
+        params = makeSingleModelParamsUnconstrained(fullModel, c=1.7, d1=15., a1=-0.5)
 
     if model == 'Reference':
         x = xData - xData[0]
