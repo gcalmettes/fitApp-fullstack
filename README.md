@@ -31,15 +31,21 @@ Install dependencies and build the react/d3 app with webpack.
 In the `frontend` folder:
 
 ```
-npm install
-npm run build
+yarn install
+yarn build
 ```
 
 2. Set up your configuration variables
 
 See `__init__.py` file in the `config` folder.
 
-3. Initialize empty SQLite database
+3. Install the python requirements
+
+```
+pip install -r requirements.txt
+```
+
+4. Initialize empty SQLite database
 
 In the repository folder:
 

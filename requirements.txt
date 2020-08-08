@@ -1,0 +1,8 @@
+flask
+lmfit
+sqlalchemy
+jwt
+flask_jwt_extended
+passlib
+pandas
+livereload
